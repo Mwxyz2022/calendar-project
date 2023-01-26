@@ -1,0 +1,25 @@
+.redLine {
+	// display: flex;
+	// height: 2px;
+	&__line {
+		height: 2px;
+		background-color: rgba($color: #ae3535, $alpha: 1);
+		position: relative;
+
+		&::before {
+			position: absolute;
+			top: -1.5px;
+			left: -2.75px;
+			content: '';
+			background-color: rgba($color: #ae3535, $alpha: 1);
+			height: 5px;
+			width: 5px;
+			border-radius: 50%;
+		}
+	}
+	// &__point {
+	// 	width: 10px;
+	// 	height: 10px;
+	// 	border-radius: 50%;
+	// }
+}

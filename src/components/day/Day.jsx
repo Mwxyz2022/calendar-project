@@ -1,6 +1,6 @@
 import React from 'react';
 import Hour from '../hour/Hour';
-
+import RedLine from '../../components/redLine/RedLine';
 import './day.scss';
 
 const Day = ({ dataDay, dayEvents, setEvents }) => {
@@ -25,6 +25,8 @@ const Day = ({ dataDay, dayEvents, setEvents }) => {
 					/>
 				);
 			})}
+
+			<RedLine />
 		</div>
 	);
 };

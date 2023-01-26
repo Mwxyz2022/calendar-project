@@ -18,6 +18,7 @@ const Navigation = ({ weekDates }) => {
 					</span>
 				</div>
 			))}
+			<div className="current_day"></div>
 		</header>
 	);
 };
