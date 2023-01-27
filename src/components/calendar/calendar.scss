@@ -65,11 +65,15 @@
 	}
 }
 
-.current_day {
-	width: 55px;
-	height: 55px;
+.today {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 45px;
+	height: 45px;
 	border-radius: 50%;
-	background-color: rgba(17, 104, 210, 0.811);
+	color: #eee;
+	background-color: rgb(17, 104, 210);
 }
 
 // .red-line {
