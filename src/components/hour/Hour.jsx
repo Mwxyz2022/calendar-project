@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import RedLine from '../redLine/RedLine';
 import Event from '../event/Event';
 import { formatMins } from '../../../src/utils/dateUtils.js';
@@ -41,6 +42,14 @@ const Hour = ({
 			})}
 		</div>
 	);
+};
+
+Hour.propTypes = {
+	dataHour: PropTypes.number.isRequired,
+	hourEvents: PropTypes.array.isRequired,
+	setEvents: PropTypes.func.isRequired,
+	dataDay: PropTypes.number.isRequired,
+	redlinePosition: PropTypes.string.isRequired,
 };
 
 export default Hour;

@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import Navigation from './../navigation/Navigation';
 import Week from '../week/Week';
 import Sidebar from '../sidebar/Sidebar';
@@ -21,6 +22,12 @@ const Calendar = ({ weekDates, events, setEvents }) => {
 			</div>
 		</section>
 	);
+};
+
+Calendar.propTypes = {
+	events: PropTypes.array.isRequired,
+	weekDates: PropTypes.array.isRequired,
+	setEvents: PropTypes.func.isRequired,
 };
 
 export default Calendar;

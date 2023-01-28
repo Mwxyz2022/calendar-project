@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
 import Day from '../day/Day';
 
 import './week.scss';
@@ -43,6 +44,12 @@ const Week = ({ weekDates, events, setEvents }) => {
 			})}
 		</div>
 	);
+};
+
+Week.propTypes = {
+	weekDates: PropTypes.array.isRequired,
+	events: PropTypes.array.isRequired,
+	setEvents: PropTypes.func.isRequired,
 };
 
 export default Week;

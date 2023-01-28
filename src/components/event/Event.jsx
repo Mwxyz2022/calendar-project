@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 import { fetchEvent, deleteEvent } from '../../gateway/events';
 
 import './event.scss';
@@ -37,6 +38,15 @@ const Event = ({ height, marginTop, title, time, setEvents, id }) => {
 			</div>
 		</>
 	);
+};
+
+Event.propTypes = {
+	height: PropTypes.number.isRequired,
+	marginTop: PropTypes.number.isRequired,
+	title: PropTypes.string.isRequired,
+	time: PropTypes.string.isRequired,
+	setEvents: PropTypes.func.isRequired,
+	id: PropTypes.string.isRequired,
 };
 
 export default Event;

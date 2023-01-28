@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react';
-
+import PropTypes from 'prop-types';
 import { days } from '../../utils/dateUtils.js';
+import '../navigation/navigation.scss';
 
 const MINUTE = 60000;
 
 const Navigation = ({ weekDates }) => {
 	const [date, setDate] = useState(new Date().setHours(0, 0, 0, 0));
+
 	useEffect(() => {
 		const intervalId = setInterval(() => {
 			setDate(new Date().setHours(0, 0, 0, 0));
@@ -37,6 +39,10 @@ const Navigation = ({ weekDates }) => {
 			})}
 		</header>
 	);
+};
+
+Navigation.propTypes = {
+	weekDates: PropTypes.array.isRequired,
 };
 
 export default Navigation;

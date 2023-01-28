@@ -1,6 +1,8 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import Hour from '../hour/Hour';
 import moment from 'moment/moment.js';
+
 import './day.scss';
 
 const Day = ({ dataDay, dayEvents, setEvents, redlinePosition }) => {
@@ -28,6 +30,13 @@ const Day = ({ dataDay, dayEvents, setEvents, redlinePosition }) => {
 			})}
 		</div>
 	);
+};
+
+Day.propTypes = {
+	dataDay: PropTypes.number.isRequired,
+	dayEvents: PropTypes.array.isRequired,
+	setEvents: PropTypes.func.isRequired,
+	redlinePosition: PropTypes.string.isRequired,
 };
 
 export default Day;

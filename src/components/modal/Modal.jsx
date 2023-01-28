@@ -1,6 +1,8 @@
 import React from 'react';
-import './modal.scss';
+import PropTypes from 'prop-types';
 import { postEvent, fetchEvent } from '../../gateway/events';
+
+import './modal.scss';
 
 const MAXEVENTTIME = 21600000;
 
@@ -29,16 +31,16 @@ const Modal = ({ setToggleModal, setEvents, events }) => {
 
 		if (newEvent.dateFrom === newEvent.dateTo) {
 			return alert(
-				'error: Минимальная длительность события должно быть не мене 15мин!'
+				'error: Minimum duration of events, not less than 15 minutes!'
 			);
 		}
 
 		if (newEvent.dateFrom > newEvent.dateTo) {
-			return alert('error: Начальная дата не может быть позже конечной!');
+			return alert(`error: Start date can't be later than end date!`);
 		}
 
 		if (newEvent.dateTo - newEvent.dateFrom > MAXEVENTTIME) {
-			return alert('error: Событие не может быть дольше 6-ти часов!');
+			return alert(`error: Event cannot be longer than 6 hours!`);
 		}
 
 		const intersect = events
@@ -53,7 +55,7 @@ const Modal = ({ setToggleModal, setEvents, events }) => {
 
 		if (!intersect) {
 			return alert(
-				'error: У Вас на это время запланировано другое событие!'
+				'error: You have another event planned for this time!'
 			);
 		}
 
@@ -64,6 +66,7 @@ const Modal = ({ setToggleModal, setEvents, events }) => {
 		});
 		setToggleModal(false);
 	};
+
 	return (
 		<div className="modal overlay">
 			<div className="modal__content">
@@ -122,6 +125,12 @@ const Modal = ({ setToggleModal, setEvents, events }) => {
 			</div>
 		</div>
 	);
+};
+
+Modal.propTypes = {
+	events: PropTypes.array.isRequired,
+	setEvents: PropTypes.func.isRequired,
+	setToggleModal: PropTypes.func.isRequired,
 };
 
 export default Modal;
