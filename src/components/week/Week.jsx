@@ -1,9 +1,25 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Day from '../day/Day';
 
 import './week.scss';
 
+const MINUTE = 60000;
+
 const Week = ({ weekDates, events, setEvents }) => {
+	const [redlinePosition, setRedlinePosition] = useState(
+		`${new Date().getMinutes()}px`
+	);
+
+	console.log(redlinePosition);
+
+	useEffect(() => {
+		const intervalId = setInterval(() => {
+			setRedlinePosition(`${new Date().getMinutes()}px`);
+		}, MINUTE);
+
+		return () => clearInterval(intervalId);
+	}, [redlinePosition]);
+
 	return (
 		<div className="calendar__week">
 			{weekDates.map((dayStart) => {
@@ -23,6 +39,7 @@ const Week = ({ weekDates, events, setEvents }) => {
 						dataDay={dayStart.getDate()}
 						dayEvents={dayEvents}
 						setEvents={setEvents}
+						redlinePosition={redlinePosition}
 					/>
 				);
 			})}

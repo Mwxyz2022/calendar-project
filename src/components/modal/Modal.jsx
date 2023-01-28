@@ -1,6 +1,5 @@
 import React from 'react';
 import './modal.scss';
-import events from '../../gateway/events';
 
 const MAXEVENTTIME = 21600000;
 

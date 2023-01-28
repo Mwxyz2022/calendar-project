@@ -1,32 +1,43 @@
-const events = [
-	{
-		id: 1,
-		title: 'Go to the gym',
-		description: 'some text here',
-		dateFrom: new Date(2023, 0, 24, 10, 15),
-		dateTo: new Date(2023, 0, 24, 15, 0),
-	},
-	{
-		id: 2,
-		title: 'Go to the school',
-		description: 'hello, 2 am',
-		dateFrom: new Date(2023, 0, 25, 10, 15),
-		dateTo: new Date(2023, 0, 25, 11, 0),
-	},
-	{
-		id: 3,
-		title: 'Lunch',
-		description: '',
-		dateFrom: new Date(2023, 0, 26, 10, 30),
-		dateTo: new Date(2023, 0, 26, 11, 30),
-	},
-	{
-		id: 4,
-		title: 'Meet friend',
-		description: 'at the cafe',
-		dateFrom: new Date(2023, 0, 27, 10, 30),
-		dateTo: new Date(2023, 0, 27, 11, 0),
-	},
-];
+const baseUrl = 'https://638a2fb34eccb986e8a68dd4.mockapi.io/api/v1/events';
 
-export default events;
+export const createEvent = (eventData) =>
+	fetch(baseUrl, {
+		method: 'POST',
+		headers: {
+			'Content-Type': 'application/json',
+		},
+		body: JSON.stringify(eventData),
+	}).then((response) => {
+		if (!response.ok) {
+			throw new Error('Failed to create event');
+		}
+	});
+
+export const fetchEvent = () =>
+	fetch(baseUrl).then((res) => {
+		if (res.ok) {
+			return res.json();
+		}
+	});
+
+export const deleteEvent = (eventId) =>
+	fetch(`${baseUrl}/${eventId}`, {
+		method: 'DELETE',
+	}).then((response) => {
+		if (!response.ok) {
+			throw new Error('Failed to delete event');
+		}
+	});
+
+// export const updateTask = (taskId, taskData) =>
+// 	fetch(`${baseUrl}/${taskId}`, {
+// 		method: 'PUT',
+// 		headers: {
+// 			'Content-Type': 'application/json',
+// 		},
+// 		body: JSON.stringify(taskData),
+// 	}).then((response) => {
+// 		if (!response.ok) {
+// 			throw new Error('Failed to update task');
+// 		}
+// 	});

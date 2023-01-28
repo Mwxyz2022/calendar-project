@@ -1,17 +1,24 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 
 import { days } from '../../utils/dateUtils.js';
 
-const TODAY = new Date().setHours(0, 0, 0, 0);
+const MINUTE = 60000;
 
 const Navigation = ({ weekDates }) => {
-	console.log(TODAY);
+	const [date, setDate] = useState(new Date().setHours(0, 0, 0, 0));
+	useEffect(() => {
+		const intervalId = setInterval(() => {
+			setDate(new Date().setHours(0, 0, 0, 0));
+		}, MINUTE);
+
+		return () => clearInterval(intervalId);
+	}, []);
+
 	return (
 		<header className="calendar__header">
 			{weekDates.map((dayDate) => {
-				console.log(dayDate.getTime());
 				const styleDay =
-					TODAY !== dayDate.getTime()
+					date !== dayDate.getTime()
 						? `day-label__day-number`
 						: `day-label__day-number today `;
 

@@ -1,6 +1,8 @@
 .redLine {
-	// display: flex;
-	// height: 2px;
+	position: absolute;
+	width: 100%;
+	top: 0;
+
 	&__line {
 		height: 2px;
 		background-color: rgba($color: #ae3535, $alpha: 1);
@@ -17,9 +19,4 @@
 			border-radius: 50%;
 		}
 	}
-	// &__point {
-	// 	width: 10px;
-	// 	height: 10px;
-	// 	border-radius: 50%;
-	// }
 }
