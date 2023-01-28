@@ -1,9 +1,10 @@
 import React from 'react';
 import './modal.scss';
+import { postEvent, fetchEvent } from '../../gateway/events';
 
 const MAXEVENTTIME = 21600000;
 
-const Modal = ({ setToggleModal, setEvents }) => {
+const Modal = ({ setToggleModal, setEvents, events }) => {
 	const closeModal = () => {
 		setToggleModal(false);
 	};
@@ -20,14 +21,13 @@ const Modal = ({ setToggleModal, setEvents }) => {
 		);
 
 		const newEvent = {
-			id: Math.random(),
 			title: e.target.title.value,
 			description: e.target.description.value,
-			dateFrom: startEventDate,
-			dateTo: endEventDate,
+			dateFrom: startEventDate.getTime(),
+			dateTo: endEventDate.getTime(),
 		};
 
-		if (newEvent.dateFrom.getTime() === newEvent.dateTo.getTime()) {
+		if (newEvent.dateFrom === newEvent.dateTo) {
 			return alert(
 				'error: Минимальная длительность события должно быть не мене 15мин!'
 			);
@@ -57,8 +57,11 @@ const Modal = ({ setToggleModal, setEvents }) => {
 			);
 		}
 
-		setEvents((prevValue) => [...prevValue, newEvent]);
-
+		postEvent(newEvent).then(() => {
+			fetchEvent().then((response) => {
+				setEvents(response);
+			});
+		});
 		setToggleModal(false);
 	};
 	return (

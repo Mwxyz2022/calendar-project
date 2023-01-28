@@ -10,8 +10,6 @@ const Week = ({ weekDates, events, setEvents }) => {
 		`${new Date().getMinutes()}px`
 	);
 
-	console.log(redlinePosition);
-
 	useEffect(() => {
 		const intervalId = setInterval(() => {
 			setRedlinePosition(`${new Date().getMinutes()}px`);

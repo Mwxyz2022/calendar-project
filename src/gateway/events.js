@@ -1,6 +1,6 @@
 const baseUrl = 'https://638a2fb34eccb986e8a68dd4.mockapi.io/api/v1/events';
 
-export const createEvent = (eventData) =>
+export const postEvent = (eventData) =>
 	fetch(baseUrl, {
 		method: 'POST',
 		headers: {

@@ -3,7 +3,7 @@ import Header from './components/header/Header.jsx';
 import Calendar from './components/calendar/Calendar.jsx';
 import Modal from './components/modal/Modal';
 import { getWeekStartDate, generateWeekRange } from '../src/utils/dateUtils.js';
-import { baseUrl, fetchEvent } from './gateway/events';
+import { fetchEvent } from './gateway/events';
 
 const App = () => {
 	const [events, setEvents] = useState([]);
@@ -32,7 +32,11 @@ const App = () => {
 				setEvents={setEvents}
 			/>
 			{showModal && (
-				<Modal setToggleModal={setToggleModal} setEvents={setEvents} />
+				<Modal
+					setToggleModal={setToggleModal}
+					setEvents={setEvents}
+					events={events}
+				/>
 			)}
 		</>
 	);

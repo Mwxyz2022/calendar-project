@@ -1,5 +1,6 @@
 import React from 'react';
 import Hour from '../hour/Hour';
+import moment from 'moment/moment.js';
 import './day.scss';
 
 const Day = ({ dataDay, dayEvents, setEvents, redlinePosition }) => {
@@ -11,7 +12,7 @@ const Day = ({ dataDay, dayEvents, setEvents, redlinePosition }) => {
 		<div className="calendar__day" data-day={dataDay}>
 			{hours.map((hour) => {
 				const hourEvents = dayEvents.filter(
-					(event) => event.dateFrom.getHours() === hour
+					(event) => moment(event.dateFrom).get('hour') === hour
 				);
 
 				return (

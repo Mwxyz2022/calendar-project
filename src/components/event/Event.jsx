@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { fetchEvent, deleteEvent } from '../../gateway/events';
 
 import './event.scss';
 
@@ -9,15 +10,17 @@ const Event = ({ height, marginTop, title, time, setEvents, id }) => {
 		setModal(!modal);
 	};
 
-	const deleteEvent = (eventId) => {
-		setEvents((prevValue) => prevValue.filter((event) => event.id !== id));
-
-		setModal(false);
-	};
-
 	const eventStyle = {
 		height,
 		marginTop,
+	};
+
+	const deleteHandler = () => {
+		deleteEvent(id).then(() => {
+			fetchEvent().then((response) => {
+				setEvents(response);
+			});
+		});
 	};
 
 	return (
@@ -26,7 +29,7 @@ const Event = ({ height, marginTop, title, time, setEvents, id }) => {
 				<div className="event__title">{title}</div>
 				<div className="event__time">{time}</div>
 				{modal ? (
-					<div className="delete" onClick={() => deleteEvent(id)}>
+					<div className="delete" onClick={deleteHandler}>
 						<i className="delete__icon fas fa-solid fa-trash"></i>
 						<span className="delete__title">Delete</span>
 					</div>

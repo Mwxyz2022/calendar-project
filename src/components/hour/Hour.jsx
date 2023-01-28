@@ -2,6 +2,7 @@ import React from 'react';
 import RedLine from '../redLine/RedLine';
 import Event from '../event/Event';
 import { formatMins } from '../../../src/utils/dateUtils.js';
+import moment from 'moment/moment.js';
 
 const Hour = ({
 	dataHour,
@@ -18,11 +19,11 @@ const Hour = ({
 			{showLine && <RedLine redlinePosition={redlinePosition} />}
 
 			{hourEvents.map(({ id, dateFrom, dateTo, title }) => {
-				const eventStart = `${dateFrom.getHours()}:${formatMins(
-					dateFrom.getMinutes()
-				)}`;
-				const eventEnd = `${dateTo.getHours()}:${formatMins(
-					dateTo.getMinutes()
+				const eventStart = `${moment(dateFrom).get(
+					'hour'
+				)}:${formatMins(moment(dateFrom).get('minute'))}`;
+				const eventEnd = `${moment(dateTo).get('hour')}:${formatMins(
+					moment(dateTo).get('minute')
 				)}`;
 
 				return (
@@ -30,11 +31,8 @@ const Hour = ({
 						key={id}
 						id={id}
 						//calculating event height = duration of event in minutes
-						height={
-							(dateTo.getTime() - dateFrom.getTime()) /
-							(1000 * 60)
-						}
-						marginTop={dateFrom.getMinutes()}
+						height={(dateTo - dateFrom) / (1000 * 60)}
+						marginTop={moment(dateFrom).get('minute')}
 						time={`${eventStart} - ${eventEnd}`}
 						title={title}
 						setEvents={setEvents}
