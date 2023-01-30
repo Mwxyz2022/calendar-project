@@ -11,13 +11,11 @@ export const getWeekStartDate = (date) => {
 };
 
 export const generateWeekRange = (startDate) => {
-	const result = [];
-	for (let i = 0; i < 7; i += 1) {
-		const base = new Date(startDate);
-		result.push(new Date(base.setDate(base.getDate() + i)));
-	}
+	return new Array(7).fill(null).map((_, index) => {
+		const monday = new Date(startDate);
 
-	return result;
+		return new Date(monday.setDate(monday.getDate() + index));
+	});
 };
 
 export const getDateTime = (date, time) => {
