@@ -2,9 +2,9 @@ import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import Day from '../day/Day';
 
-import './week.scss';
+import { MINUTE } from '../../utils/variables';
 
-const MINUTE = 60000;
+import './week.scss';
 
 const Week = ({ weekDates, events, setEvents }) => {
 	const [redlinePosition, setRedlinePosition] = useState(
@@ -29,7 +29,7 @@ const Week = ({ weekDates, events, setEvents }) => {
 				//getting all events from the day we will render
 				const dayEvents = events.filter(
 					(event) =>
-						event.dateFrom > dayStart && event.dateTo < dayEnd
+						event.dateFrom >= dayStart && event.dateTo <= dayEnd
 				);
 
 				return (

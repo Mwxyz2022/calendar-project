@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import RedLine from '../redLine/RedLine';
 import Event from '../event/Event';
 import { formatMins } from '../../../src/utils/dateUtils.js';
+
 import moment from 'moment/moment.js';
 
 const Hour = ({

@@ -1,70 +1,40 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { postEvent, fetchEvent } from '../../gateway/events';
+import { isValidationEvent } from './validation';
 
 import './modal.scss';
-
-const MAXEVENTTIME = 21600000;
 
 const Modal = ({ setToggleModal, setEvents, events }) => {
 	const closeModal = () => {
 		setToggleModal(false);
 	};
 
-	const createEvent = (e) => {
+	const createEventHandler = (e) => {
 		e.preventDefault();
-
-		const startEventDate = new Date(
-			`${e.target.date.value} ${e.target.startTime.value}`
-		);
-
-		const endEventDate = new Date(
-			`${e.target.date.value} ${e.target.endTime.value}`
-		);
 
 		const newEvent = {
 			title: e.target.title.value,
+
 			description: e.target.description.value,
-			dateFrom: startEventDate.getTime(),
-			dateTo: endEventDate.getTime(),
+
+			dateFrom: new Date(
+				`${e.target.date.value} ${e.target.startTime.value}`
+			).getTime(),
+
+			dateTo: new Date(
+				`${e.target.date.value} ${e.target.endTime.value}`
+			).getTime(),
 		};
 
-		if (newEvent.dateFrom === newEvent.dateTo) {
-			return alert(
-				'error: Minimum duration of events, not less than 15 minutes!'
-			);
-		}
-
-		if (newEvent.dateFrom > newEvent.dateTo) {
-			return alert(`error: Start date can't be later than end date!`);
-		}
-
-		if (newEvent.dateTo - newEvent.dateFrom > MAXEVENTTIME) {
-			return alert(`error: Event cannot be longer than 6 hours!`);
-		}
-
-		const intersect = events
-			.map(
-				(event) =>
-					(newEvent.dateFrom < event.dateFrom &&
-						newEvent.dateTo <= event.dateFrom) ||
-					(newEvent.dateFrom >= event.dateTo &&
-						newEvent.dateTo > event.dateTo)
-			)
-			.every((el) => el === true);
-
-		if (!intersect) {
-			return alert(
-				'error: You have another event planned for this time!'
-			);
-		}
-
-		postEvent(newEvent).then(() => {
-			fetchEvent().then((response) => {
-				setEvents(response);
+		if (isValidationEvent(newEvent, events)) {
+			postEvent(newEvent).then(() => {
+				fetchEvent().then((response) => {
+					setEvents(response);
+					setToggleModal(false);
+				});
 			});
-		});
-		setToggleModal(false);
+		}
 	};
 
 	return (
@@ -77,7 +47,7 @@ const Modal = ({ setToggleModal, setEvents, events }) => {
 					>
 						+
 					</button>
-					<form className="event-form" onSubmit={createEvent}>
+					<form className="event-form" onSubmit={createEventHandler}>
 						<input
 							type="text"
 							name="title"

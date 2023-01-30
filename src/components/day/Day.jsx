@@ -16,7 +16,6 @@ const Day = ({ dataDay, dayEvents, setEvents, redlinePosition }) => {
 				const hourEvents = dayEvents.filter(
 					(event) => moment(event.dateFrom).get('hour') === hour
 				);
-
 				return (
 					<Hour
 						key={dataDay + hour}
