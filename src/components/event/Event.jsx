@@ -5,10 +5,10 @@ import { fetchEvent, deleteEvent } from '../../gateway/events';
 import './event.scss';
 
 const Event = ({ height, marginTop, title, time, setEvents, id }) => {
-	const [modal, setModal] = useState(false);
+	const [modal, setToggleModal] = useState(false);
 
 	const openModal = () => {
-		setModal(!modal);
+		setToggleModal(!modal);
 	};
 
 	const eventStyle = {
@@ -16,11 +16,14 @@ const Event = ({ height, marginTop, title, time, setEvents, id }) => {
 		marginTop,
 	};
 
-	const deleteHandler = () => {
+	const deletePosition = height - 10;
+
+	const deleteEventHandler = () => {
 		deleteEvent(id).then(() => {
 			fetchEvent().then((response) => {
 				setEvents(response);
 			});
+			setToggleModal(false);
 		});
 	};
 
@@ -29,13 +32,17 @@ const Event = ({ height, marginTop, title, time, setEvents, id }) => {
 			<div style={eventStyle} className="event" onClick={openModal}>
 				<div className="event__title">{title}</div>
 				<div className="event__time">{time}</div>
-				{modal ? (
-					<div className="delete" onClick={deleteHandler}>
-						<i className="delete__icon fas fa-solid fa-trash"></i>
-						<span className="delete__title">Delete</span>
-					</div>
-				) : null}
 			</div>
+			{modal && (
+				<div
+					className="delete"
+					onClick={deleteEventHandler}
+					style={{ top: deletePosition }}
+				>
+					<i className="delete__icon fas fa-solid fa-trash"></i>
+					<span className="delete__title">Delete</span>
+				</div>
+			)}
 		</>
 	);
 };
