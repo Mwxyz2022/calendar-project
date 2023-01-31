@@ -6,7 +6,13 @@ import Sidebar from '../sidebar/Sidebar';
 
 import './calendar.scss';
 
-const Calendar = ({ weekDates, events, setEvents }) => {
+const Calendar = ({
+	weekDates,
+	events,
+	setEvents,
+	setToggleModal,
+	getSlotDate,
+}) => {
 	return (
 		<section className="calendar">
 			<Navigation weekDates={weekDates} />
@@ -17,6 +23,8 @@ const Calendar = ({ weekDates, events, setEvents }) => {
 						weekDates={weekDates}
 						events={events}
 						setEvents={setEvents}
+						setToggleModal={setToggleModal}
+						getSlotDate={getSlotDate}
 					/>
 				</div>
 			</div>
@@ -28,6 +36,8 @@ Calendar.propTypes = {
 	events: PropTypes.array.isRequired,
 	weekDates: PropTypes.array.isRequired,
 	setEvents: PropTypes.func.isRequired,
+	setToggleModal: PropTypes.func.isRequired,
+	getSlotDate: PropTypes.func.isRequired,
 };
 
 export default Calendar;

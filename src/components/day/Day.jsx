@@ -5,7 +5,15 @@ import Hour from '../hour/Hour';
 
 import './day.scss';
 
-const Day = ({ dataDay, dayEvents, setEvents, redlinePosition }) => {
+const Day = ({
+	fullDayDate,
+	dataDay,
+	dayEvents,
+	setEvents,
+	redlinePosition,
+	setToggleModal,
+	getSlotDate,
+}) => {
 	const hours = Array(24)
 		.fill()
 		.map((val, index) => index);
@@ -22,8 +30,11 @@ const Day = ({ dataDay, dayEvents, setEvents, redlinePosition }) => {
 						dataHour={hour}
 						hourEvents={hourEvents}
 						setEvents={setEvents}
+						fullDayDate={fullDayDate}
 						dataDay={dataDay}
 						redlinePosition={redlinePosition}
+						setToggleModal={setToggleModal}
+						getSlotDate={getSlotDate}
 					/>
 				);
 			})}
@@ -32,10 +43,13 @@ const Day = ({ dataDay, dayEvents, setEvents, redlinePosition }) => {
 };
 
 Day.propTypes = {
+	fullDayDate: PropTypes.object.isRequired,
 	dataDay: PropTypes.number.isRequired,
 	dayEvents: PropTypes.array.isRequired,
 	setEvents: PropTypes.func.isRequired,
 	redlinePosition: PropTypes.string.isRequired,
+	setToggleModal: PropTypes.func.isRequired,
+	getSlotDate: PropTypes.func.isRequired,
 };
 
 export default Day;

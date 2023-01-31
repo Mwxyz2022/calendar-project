@@ -10,14 +10,26 @@ const Hour = ({
 	dataHour,
 	hourEvents,
 	setEvents,
+	fullDayDate,
 	dataDay,
 	redlinePosition,
+	setToggleModal,
+	getSlotDate,
 }) => {
 	const showLine =
 		dataDay === new Date().getDate() && dataHour === new Date().getHours();
 
+	const openModal = () => {
+		getSlotDate(fullDayDate, dataHour);
+		setToggleModal(true);
+	};
+
 	return (
-		<div className="calendar__time-slot" data-time={dataHour + 1}>
+		<div
+			className="calendar__time-slot"
+			data-time={dataHour + 1}
+			onClick={openModal}
+		>
 			{showLine && <RedLine redlinePosition={redlinePosition} />}
 
 			{hourEvents.map(({ id, dateFrom, dateTo, title }) => {
@@ -50,6 +62,9 @@ Hour.propTypes = {
 	setEvents: PropTypes.func.isRequired,
 	dataDay: PropTypes.number.isRequired,
 	redlinePosition: PropTypes.string.isRequired,
+	setToggleModal: PropTypes.func.isRequired,
+	getSlotDate: PropTypes.func.isRequired,
+	fullDayDate: PropTypes.object.isRequired,
 };
 
 export default Hour;

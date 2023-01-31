@@ -6,7 +6,13 @@ import { MINUTE } from '../../utils/variables';
 
 import './week.scss';
 
-const Week = ({ weekDates, events, setEvents }) => {
+const Week = ({
+	weekDates,
+	events,
+	setEvents,
+	setToggleModal,
+	getSlotDate,
+}) => {
 	const [redlinePosition, setRedlinePosition] = useState(
 		`${new Date().getMinutes()}px`
 	);
@@ -26,7 +32,6 @@ const Week = ({ weekDates, events, setEvents }) => {
 					dayStart.getHours() + 24
 				);
 
-				//getting all events from the day we will render
 				const dayEvents = events.filter(
 					(event) =>
 						event.dateFrom >= dayStart && event.dateTo <= dayEnd
@@ -35,10 +40,13 @@ const Week = ({ weekDates, events, setEvents }) => {
 				return (
 					<Day
 						key={dayStart.getDate()}
+						fullDayDate={dayStart}
 						dataDay={dayStart.getDate()}
 						dayEvents={dayEvents}
 						setEvents={setEvents}
 						redlinePosition={redlinePosition}
+						setToggleModal={setToggleModal}
+						getSlotDate={getSlotDate}
 					/>
 				);
 			})}
@@ -50,6 +58,8 @@ Week.propTypes = {
 	weekDates: PropTypes.array.isRequired,
 	events: PropTypes.array.isRequired,
 	setEvents: PropTypes.func.isRequired,
+	setToggleModal: PropTypes.func.isRequired,
+	getSlotDate: PropTypes.func.isRequired,
 };
 
 export default Week;

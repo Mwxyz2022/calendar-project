@@ -7,7 +7,13 @@ import { getDefStartTime, getDefEndTime } from './defaultTimeUtils';
 
 import './modal.scss';
 
-const Modal = ({ setToggleModal, setEvents, events }) => {
+const Modal = ({
+	setToggleModal,
+	setEvents,
+	events,
+	setDefSlotDate,
+	defSlotDate,
+}) => {
 	const currentMoment = moment();
 
 	const defaultTime = {
@@ -17,12 +23,13 @@ const Modal = ({ setToggleModal, setEvents, events }) => {
 	};
 
 	const closeModal = () => {
+		setDefSlotDate(null);
 		setToggleModal(false);
 	};
 
 	const createEventHandler = (e) => {
 		e.preventDefault();
-		console.log(e.target.startTime.value);
+
 		const newEvent = {
 			title: e.target.title.value,
 			description: e.target.description.value,
@@ -38,6 +45,7 @@ const Modal = ({ setToggleModal, setEvents, events }) => {
 			postEvent(newEvent).then(() => {
 				fetchEvent().then((response) => {
 					setEvents(response);
+					setDefSlotDate(null);
 					setToggleModal(false);
 				});
 			});
@@ -67,14 +75,22 @@ const Modal = ({ setToggleModal, setEvents, events }) => {
 								type="date"
 								name="date"
 								className="event-form__field"
-								defaultValue={defaultTime.eventDate}
+								defaultValue={
+									defSlotDate
+										? defSlotDate.eventDate
+										: defaultTime.eventDate
+								}
 								required
 							/>
 							<input
 								type="time"
 								name="startTime"
 								className="event-form__field"
-								defaultValue={defaultTime.eventStartTime}
+								defaultValue={
+									defSlotDate
+										? defSlotDate.eventStartTime
+										: defaultTime.eventStartTime
+								}
 								step="900"
 								required
 							/>
@@ -83,7 +99,11 @@ const Modal = ({ setToggleModal, setEvents, events }) => {
 								type="time"
 								name="endTime"
 								className="event-form__field"
-								defaultValue={defaultTime.eventEndTime}
+								defaultValue={
+									defSlotDate
+										? defSlotDate.eventEndTime
+										: defaultTime.eventEndTime
+								}
 								step="900"
 								required
 							/>
@@ -111,6 +131,8 @@ Modal.propTypes = {
 	events: PropTypes.array.isRequired,
 	setEvents: PropTypes.func.isRequired,
 	setToggleModal: PropTypes.func.isRequired,
+	setDefSlotDate: PropTypes.func.isRequired,
+	defSlotDate: PropTypes.object,
 };
 
 export default Modal;
