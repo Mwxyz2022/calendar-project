@@ -8,7 +8,7 @@ import { getDefStartTime, getDefEndTime } from './defaultTimeUtils';
 import './modal.scss';
 
 const Modal = ({ setToggleModal, setEvents, events }) => {
-	const currentMoment = moment().set('hour', 23).set('minute', 16);
+	const currentMoment = moment();
 
 	const defaultTime = {
 		eventDate: moment().format('YYYY-MM-DD'),
