@@ -13,13 +13,21 @@ const Header = ({ weekStartDate, weekDates, setStartWeek, setToggleModal }) => {
 		setToggleModal(true);
 	};
 
-	const changeWeekHandler = (updateWeek) => {
+	const changeWeekHandler = (event) => {
+		const week = {
+			previous: -7,
+			next: 7,
+		};
+
 		setStartWeek(
 			new Date(
-				weekStartDate.setDate(weekStartDate.getDate() + updateWeek)
+				weekStartDate.setDate(
+					weekStartDate.getDate() + week[event.currentTarget.name]
+				)
 			)
 		);
 	};
+
 	const getMonth = () => {
 		const currentMonths = [
 			...new Set(weekDates.map((day) => months[day.getMonth()])),
@@ -30,6 +38,8 @@ const Header = ({ weekStartDate, weekDates, setStartWeek, setToggleModal }) => {
 
 		return `${currentMonths[0]} - ${currentMonths[1]}`;
 	};
+
+	const currentMonth = getMonth();
 
 	return (
 		<header className="header">
@@ -52,18 +62,20 @@ const Header = ({ weekStartDate, weekDates, setStartWeek, setToggleModal }) => {
 				</button>
 				<button
 					className="icon-button navigation__nav-icon"
-					onClick={() => changeWeekHandler(-7)}
+					name="previous"
+					onClick={changeWeekHandler}
 				>
 					<i className="fas fa-chevron-left"></i>
 				</button>
 				<button
 					className="icon-button navigation__nav-icon"
-					onClick={() => changeWeekHandler(7)}
+					name="next"
+					onClick={changeWeekHandler}
 				>
 					<i className="fas fa-chevron-right"></i>
 				</button>
 				<span className="navigation__displayed-month">
-					{getMonth()}
+					{currentMonth}
 				</span>
 			</div>
 		</header>
