@@ -32,7 +32,6 @@ const Hour = ({
 					<Event
 						key={id}
 						id={id}
-						//calculating event height = duration of event in minutes
 						height={(dateTo - dateFrom) / (1000 * 60)}
 						marginTop={moment(dateFrom).get('minute')}
 						time={`${eventStart} - ${eventEnd}`}

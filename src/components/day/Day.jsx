@@ -1,7 +1,7 @@
 import React from 'react';
+import moment from 'moment/moment.js';
 import PropTypes from 'prop-types';
 import Hour from '../hour/Hour';
-import moment from 'moment/moment.js';
 
 import './day.scss';
 

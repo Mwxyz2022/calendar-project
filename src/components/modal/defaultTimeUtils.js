@@ -31,12 +31,12 @@ export const getDefEndTime = (date) => {
 	let [hour, mins] = date.split(':');
 	hour = parseInt(hour);
 
-	if ((hour === 0 && mins == 0) || (hour === 23 && mins > 0)) {
-		return '00:00';
+	if (hour === 0 && mins >= 0) {
+		return `01:${mins}`;
 	}
 
-	if (hour === 0 && mins > 0) {
-		return `01:${mins}`;
+	if (hour === 23 && mins > 0) {
+		return '23:59';
 	}
 
 	return `${formatHour(hour + 1)}:${mins}`;
