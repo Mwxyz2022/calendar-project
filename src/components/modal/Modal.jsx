@@ -1,18 +1,19 @@
 import React from 'react';
 import moment from 'moment/moment';
 import PropTypes from 'prop-types';
-import { postEvent, fetchEvent } from '../../gateway/events';
-import { isValidationEvent } from './validation';
-import { getDefStartTime, getDefEndTime } from './defaultTimeUtils';
+
+import { postEvent, fetchEvent } from '../../gateway/events.js';
+import { isValidationEvent } from './validation.js';
+import { getDefStartTime, getDefEndTime } from './defaultTimeUtils.js';
 
 import './modal.scss';
 
 const Modal = ({
-	setToggleModal,
-	setEvents,
 	events,
-	setDefSlotDate,
 	defSlotDate,
+	setEvents,
+	setToggleModal,
+	setDefSlotDate,
 }) => {
 	const currentMoment = moment();
 
@@ -66,8 +67,8 @@ const Modal = ({
 						<input
 							type="text"
 							name="title"
-							placeholder="Title"
 							className="event-form__field"
+							placeholder="Title"
 							required
 						/>
 						<div className="event-form__time">
@@ -110,8 +111,8 @@ const Modal = ({
 						</div>
 						<textarea
 							name="description"
-							placeholder="Description"
 							className="event-form__field"
+							placeholder="Description"
 							required
 						></textarea>
 						<button
@@ -129,10 +130,10 @@ const Modal = ({
 
 Modal.propTypes = {
 	events: PropTypes.array.isRequired,
+	defSlotDate: PropTypes.object,
 	setEvents: PropTypes.func.isRequired,
 	setToggleModal: PropTypes.func.isRequired,
 	setDefSlotDate: PropTypes.func.isRequired,
-	defSlotDate: PropTypes.object,
 };
 
 export default Modal;

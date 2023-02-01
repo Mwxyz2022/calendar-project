@@ -1,14 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import Day from '../day/Day';
 
-import { MINUTE } from '../../utils/variables';
+import Day from '../day/Day.jsx';
 
 import './week.scss';
 
+import { MINUTE } from '../../utils/variables.js';
+
 const Week = ({
-	weekDates,
 	events,
+	weekDates,
 	setEvents,
 	setToggleModal,
 	getSlotDate,
@@ -55,8 +56,8 @@ const Week = ({
 };
 
 Week.propTypes = {
-	weekDates: PropTypes.array.isRequired,
 	events: PropTypes.array.isRequired,
+	weekDates: PropTypes.array.isRequired,
 	setEvents: PropTypes.func.isRequired,
 	setToggleModal: PropTypes.func.isRequired,
 	getSlotDate: PropTypes.func.isRequired,

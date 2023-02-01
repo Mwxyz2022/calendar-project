@@ -1,18 +1,19 @@
 import React from 'react';
+import moment from 'moment/moment.js';
 import PropTypes from 'prop-types';
-import RedLine from '../redLine/RedLine';
-import Event from '../event/Event';
+
+import RedLine from '../redLine/RedLine.jsx';
+import Event from '../event/Event.jsx';
+
 import { formatMins } from '../../../src/utils/dateUtils.js';
 
-import moment from 'moment/moment.js';
-
 const Hour = ({
-	dataHour,
-	hourEvents,
-	setEvents,
-	fullDayDate,
-	dataDay,
 	redlinePosition,
+	dataHour,
+	dataDay,
+	hourEvents,
+	fullDayDate,
+	setEvents,
 	setToggleModal,
 	getSlotDate,
 }) => {
@@ -57,14 +58,14 @@ const Hour = ({
 };
 
 Hour.propTypes = {
-	dataHour: PropTypes.number.isRequired,
-	hourEvents: PropTypes.array.isRequired,
-	setEvents: PropTypes.func.isRequired,
-	dataDay: PropTypes.number.isRequired,
 	redlinePosition: PropTypes.string.isRequired,
+	dataHour: PropTypes.number.isRequired,
+	dataDay: PropTypes.number.isRequired,
+	hourEvents: PropTypes.array.isRequired,
+	fullDayDate: PropTypes.object.isRequired,
+	setEvents: PropTypes.func.isRequired,
 	setToggleModal: PropTypes.func.isRequired,
 	getSlotDate: PropTypes.func.isRequired,
-	fullDayDate: PropTypes.object.isRequired,
 };
 
 export default Hour;

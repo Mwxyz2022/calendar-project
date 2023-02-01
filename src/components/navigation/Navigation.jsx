@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
+
 import { days } from '../../utils/dateUtils.js';
 
-import { MINUTE } from '../../utils/variables.js';
 import '../navigation/navigation.scss';
+
+import { MINUTE } from '../../utils/variables.js';
 
 const Navigation = ({ weekDates }) => {
 	const [date, setDate] = useState(new Date().setHours(0, 0, 0, 0));

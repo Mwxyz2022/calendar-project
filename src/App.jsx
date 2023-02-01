@@ -3,10 +3,10 @@ import moment from 'moment/moment.js';
 
 import Header from './components/header/Header.jsx';
 import Calendar from './components/calendar/Calendar.jsx';
-import Modal from './components/modal/Modal';
+import Modal from './components/modal/Modal.jsx';
 
 import { getWeekStartDate, generateWeekRange } from '../src/utils/dateUtils.js';
-import { fetchEvent } from './gateway/events';
+import { fetchEvent } from './gateway/events.js';
 
 import './common.scss';
 
@@ -56,10 +56,10 @@ const App = () => {
 			{showModal && (
 				<Modal
 					events={events}
+					defSlotDate={defSlotDate}
 					setToggleModal={setToggleModal}
 					setEvents={setEvents}
 					setDefSlotDate={setDefSlotDate}
-					defSlotDate={defSlotDate}
 				/>
 			)}
 		</>

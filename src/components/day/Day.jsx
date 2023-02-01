@@ -1,16 +1,17 @@
 import React from 'react';
 import moment from 'moment/moment.js';
 import PropTypes from 'prop-types';
-import Hour from '../hour/Hour';
+
+import Hour from '../hour/Hour.jsx';
 
 import './day.scss';
 
 const Day = ({
-	fullDayDate,
+	redlinePosition,
 	dataDay,
+	fullDayDate,
 	dayEvents,
 	setEvents,
-	redlinePosition,
 	setToggleModal,
 	getSlotDate,
 }) => {
@@ -29,10 +30,10 @@ const Day = ({
 						key={dataDay + hour}
 						dataHour={hour}
 						hourEvents={hourEvents}
-						setEvents={setEvents}
-						fullDayDate={fullDayDate}
-						dataDay={dataDay}
 						redlinePosition={redlinePosition}
+						dataDay={dataDay}
+						fullDayDate={fullDayDate}
+						setEvents={setEvents}
 						setToggleModal={setToggleModal}
 						getSlotDate={getSlotDate}
 					/>
@@ -43,11 +44,11 @@ const Day = ({
 };
 
 Day.propTypes = {
-	fullDayDate: PropTypes.object.isRequired,
+	redlinePosition: PropTypes.string.isRequired,
 	dataDay: PropTypes.number.isRequired,
+	fullDayDate: PropTypes.object.isRequired,
 	dayEvents: PropTypes.array.isRequired,
 	setEvents: PropTypes.func.isRequired,
-	redlinePosition: PropTypes.string.isRequired,
 	setToggleModal: PropTypes.func.isRequired,
 	getSlotDate: PropTypes.func.isRequired,
 };

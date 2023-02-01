@@ -1,6 +1,7 @@
 import React from 'react';
-import { months } from '../../utils/dateUtils';
 import PropTypes from 'prop-types';
+
+import { months } from '../../utils/dateUtils.js';
 
 import './header.scss';
 

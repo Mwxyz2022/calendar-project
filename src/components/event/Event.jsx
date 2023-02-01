@@ -4,7 +4,7 @@ import { fetchEvent, deleteEvent } from '../../gateway/events';
 
 import './event.scss';
 
-const Event = ({ height, marginTop, title, time, setEvents, id }) => {
+const Event = ({ id, title, time, height, marginTop, setEvents }) => {
 	const [modal, setToggleModal] = useState(false);
 
 	const openModal = () => {
@@ -16,7 +16,7 @@ const Event = ({ height, marginTop, title, time, setEvents, id }) => {
 		marginTop,
 	};
 
-	const deletePosition = height - 10;
+	const delBtnPosition = height - 10;
 
 	const deleteEventHandler = () => {
 		deleteEvent(id).then(() => {
@@ -37,7 +37,7 @@ const Event = ({ height, marginTop, title, time, setEvents, id }) => {
 				<div
 					className="delete"
 					onClick={deleteEventHandler}
-					style={{ top: deletePosition }}
+					style={{ top: delBtnPosition }}
 				>
 					<i className="delete__icon fas fa-solid fa-trash"></i>
 					<span className="delete__title">Delete</span>
@@ -48,12 +48,12 @@ const Event = ({ height, marginTop, title, time, setEvents, id }) => {
 };
 
 Event.propTypes = {
-	height: PropTypes.number.isRequired,
-	marginTop: PropTypes.number.isRequired,
+	id: PropTypes.string.isRequired,
 	title: PropTypes.string.isRequired,
 	time: PropTypes.string.isRequired,
+	height: PropTypes.number.isRequired,
+	marginTop: PropTypes.number.isRequired,
 	setEvents: PropTypes.func.isRequired,
-	id: PropTypes.string.isRequired,
 };
 
 export default Event;
