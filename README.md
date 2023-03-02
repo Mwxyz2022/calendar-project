@@ -11,7 +11,6 @@
 - `npm start or yarn start` "Starting project"
 - `npm run build` "Bundling project"
 
-
 ### The tech stack is:
 
 - [HTML5](http://htmlbook.ru/html)
@@ -23,4 +22,5 @@
 - [React](https://en.reactjs.org/)
 
 ### Author:
+
 - Vladislav Rozhuk
