@@ -2,10 +2,6 @@
 
 ## [Calendar-react Netlify](https://lucent-praline-056e76.netlify.app/)
 
-## [Git Hub Page](https://github.com/Mwxyz2022)
-
-### [Calendar-react-github-page](https://github.com/Mwxyz2022/React-calendar)
-
 ## Project commands:
 
 - `npm start or yarn start` "Starting project"
