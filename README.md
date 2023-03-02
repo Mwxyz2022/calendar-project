@@ -1,8 +1,8 @@
-# Calendar-react
+ Calendar-react
 
 ## [Calendar-react Netlify](https://lucent-praline-056e76.netlify.app/)
 
-## Project commands:
+ Project commands:
 
 - `npm start or yarn start` "Starting project"
 - `npm run build` "Bundling project"
