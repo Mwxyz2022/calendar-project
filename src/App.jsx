@@ -5,7 +5,7 @@ import Calendar from './components/calendar/Calendar.jsx';
 
 import { getWeekStartDate, generateWeekRange } from '../src/utils/dateUtils.js';
 
-import './common.scss';
+import './assets/common.scss';
 
 const App = () => {
   const [weekStartDate, setStartWeek] = useState(new Date());
