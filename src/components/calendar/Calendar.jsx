@@ -16,9 +16,9 @@ const Calendar = ({ showModal, weekDates, setToggleModal }) => {
   const [events, setEvents] = useState([]);
   const [hourData, setHourData] = useState(null);
 
-  const onEventHandler = e => {
-    const time = parseInt(e.target.dataset.time);
-    const dayDate = weekDates[e.target.parentNode.getAttribute('data-day')];
+  const onEventHandler = event => {
+    const time = parseInt(event.target.dataset.time);
+    const dayDate = weekDates[event.target.parentNode.getAttribute('data-day')];
 
     setHourData({
       eventDate: moment(dayDate).format('YYYY-MM-DD'),
