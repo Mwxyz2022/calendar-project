@@ -47,7 +47,6 @@ const Calendar = ({ showModal, weekDates, setToggleModal }) => {
       </section>
       {showModal && (
         <Modal
-          events={events}
           hourData={hourData}
           setToggleModal={setToggleModal}
           setEvents={setEvents}

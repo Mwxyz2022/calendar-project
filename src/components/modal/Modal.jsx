@@ -8,7 +8,7 @@ import { getDefStartTime, getDefEndTime } from '../../utils/timeUtils';
 
 import './modal.scss';
 
-const Modal = ({ events, hourData, setEvents, setToggleModal, setHourData }) => {
+const Modal = ({ hourData, setEvents, setToggleModal, setHourData }) => {
   const currentMoment = moment();
 
   const defaultTime = {
@@ -32,15 +32,17 @@ const Modal = ({ events, hourData, setEvents, setToggleModal, setHourData }) => 
       dateTo: new Date(`${e.target.date.value} ${e.target.endTime.value}`).getTime(),
     };
 
-    if (isValidationEvent(newEvent, events)) {
-      postEvent(newEvent).then(() => {
-        fetchEvent().then(response => {
-          setEvents(response);
-          setHourData(null);
-          setToggleModal(false);
+    fetchEvent().then(eventsArray => {
+      if (isValidationEvent(newEvent, eventsArray)) {
+        postEvent(newEvent).then(() => {
+          fetchEvent().then(response => {
+            setEvents(response);
+            setHourData(null);
+            setToggleModal(false);
+          });
         });
-      });
-    }
+      }
+    });
   };
 
   return (
@@ -101,8 +103,7 @@ const Modal = ({ events, hourData, setEvents, setToggleModal, setHourData }) => 
 };
 
 Modal.propTypes = {
-  events: PropTypes.array.isRequired,
-  defSlotDate: PropTypes.object,
+  hourData: PropTypes.object,
   setEvents: PropTypes.func.isRequired,
   setToggleModal: PropTypes.func.isRequired,
   setHourData: PropTypes.func.isRequired,
