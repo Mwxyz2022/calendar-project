@@ -14,9 +14,9 @@ export const postEvent = eventData =>
   });
 
 export const fetchEvent = () =>
-  fetch(baseUrl).then(res => {
-    if (res.ok) {
-      return res.json();
+  fetch(baseUrl).then(response => {
+    if (response.ok) {
+      return response.json();
     }
   });
 

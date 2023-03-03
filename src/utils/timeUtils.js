@@ -1,5 +1,11 @@
-const formatHour = hour => {
-  return hour < 10 ? `0${hour}` : hour;
+export const formatTime = time => {
+  return time < 10 ? `0${time}` : time;
+};
+
+export const getFullTime = hour => {
+  if (hour === 24) return '23:59';
+
+  return hour < 10 ? `0${hour}:00` : `${hour}:00`;
 };
 
 export const getDefStartTime = date => {
@@ -16,10 +22,10 @@ export const getDefStartTime = date => {
 
   if (currentMins > 45 && hour !== 23) {
     hour += 1;
-    return `${formatHour(hour)}:00`;
+    return `${formatTime(hour)}:00`;
   }
 
-  hour = formatHour(hour);
+  hour = formatTime(hour);
 
   return `${hour}:${mins}`;
 };
@@ -36,5 +42,5 @@ export const getDefEndTime = date => {
     return '23:59';
   }
 
-  return `${formatHour(hour + 1)}:${mins}`;
+  return `${formatTime(hour + 1)}:${mins}`;
 };

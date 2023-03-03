@@ -5,10 +5,11 @@ import { fetchEvent, deleteEvent } from '../../gateway/events';
 import './event.scss';
 
 const Event = ({ id, title, time, height, marginTop, setEvents }) => {
-  const [modal, setToggleModal] = useState(false);
+  const [deleteModal, setDeleteModal] = useState(false);
 
-  const openModal = () => {
-    setToggleModal(!modal);
+  const deleteModalHandler = event => {
+    event.stopPropagation();
+    setDeleteModal(!deleteModal);
   };
 
   const eventStyle = {
@@ -18,22 +19,23 @@ const Event = ({ id, title, time, height, marginTop, setEvents }) => {
 
   const delBtnPosition = height - 10;
 
-  const deleteEventHandler = () => {
+  const deleteEventHandler = event => {
+    event.stopPropagation();
     deleteEvent(id).then(() => {
       fetchEvent().then(response => {
         setEvents(response);
       });
-      setToggleModal(false);
+      setDeleteModal(false);
     });
   };
 
   return (
     <>
-      <div style={eventStyle} className="event" onClick={openModal}>
+      <div style={eventStyle} className="event" onClick={deleteModalHandler}>
         <div className="event__title">{title}</div>
         <div className="event__time">{time}</div>
       </div>
-      {modal && (
+      {deleteModal && (
         <div className="delete" onClick={deleteEventHandler} style={{ top: delBtnPosition }}>
           <i className="delete__icon fas fa-solid fa-trash"></i>
           <span className="delete__title">Delete</span>

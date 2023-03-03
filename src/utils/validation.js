@@ -1,4 +1,4 @@
-import { EVENTMAXTIME } from '../../utils/variables';
+import { EVENTMAXTIME } from './variables';
 
 export const isValidationEvent = (newEvent, events) => {
   let isValid = true;

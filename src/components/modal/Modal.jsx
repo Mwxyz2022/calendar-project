@@ -3,12 +3,12 @@ import moment from 'moment/moment';
 import PropTypes from 'prop-types';
 
 import { postEvent, fetchEvent } from '../../gateway/events.js';
-import { isValidationEvent } from './validation.js';
-import { getDefStartTime, getDefEndTime } from './defaultTimeUtils.js';
+import { isValidationEvent } from '../../utils/validation';
+import { getDefStartTime, getDefEndTime } from '../../utils/timeUtils';
 
 import './modal.scss';
 
-const Modal = ({ events, defSlotDate, setEvents, setToggleModal, setDefSlotDate }) => {
+const Modal = ({ events, hourData, setEvents, setToggleModal, setHourData }) => {
   const currentMoment = moment();
 
   const defaultTime = {
@@ -18,7 +18,7 @@ const Modal = ({ events, defSlotDate, setEvents, setToggleModal, setDefSlotDate 
   };
 
   const closeModal = () => {
-    setDefSlotDate(null);
+    setHourData(null);
     setToggleModal(false);
   };
 
@@ -36,7 +36,7 @@ const Modal = ({ events, defSlotDate, setEvents, setToggleModal, setDefSlotDate 
       postEvent(newEvent).then(() => {
         fetchEvent().then(response => {
           setEvents(response);
-          setDefSlotDate(null);
+          setHourData(null);
           setToggleModal(false);
         });
       });
@@ -63,14 +63,14 @@ const Modal = ({ events, defSlotDate, setEvents, setToggleModal, setDefSlotDate 
                 type="date"
                 name="date"
                 className="event-form__field"
-                defaultValue={defSlotDate ? defSlotDate.eventDate : defaultTime.eventDate}
+                defaultValue={hourData ? hourData.eventDate : defaultTime.eventDate}
                 required
               />
               <input
                 type="time"
                 name="startTime"
                 className="event-form__field"
-                defaultValue={defSlotDate ? defSlotDate.eventStartTime : defaultTime.eventStartTime}
+                defaultValue={hourData ? hourData.eventStartTime : defaultTime.eventStartTime}
                 step="900"
                 required
               />
@@ -79,7 +79,7 @@ const Modal = ({ events, defSlotDate, setEvents, setToggleModal, setDefSlotDate 
                 type="time"
                 name="endTime"
                 className="event-form__field"
-                defaultValue={defSlotDate ? defSlotDate.eventEndTime : defaultTime.eventEndTime}
+                defaultValue={hourData ? hourData.eventEndTime : defaultTime.eventEndTime}
                 step="900"
                 required
               />
@@ -105,7 +105,7 @@ Modal.propTypes = {
   defSlotDate: PropTypes.object,
   setEvents: PropTypes.func.isRequired,
   setToggleModal: PropTypes.func.isRequired,
-  setDefSlotDate: PropTypes.func.isRequired,
+  setHourData: PropTypes.func.isRequired,
 };
 
 export default Modal;
