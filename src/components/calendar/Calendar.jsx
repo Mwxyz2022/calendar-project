@@ -18,7 +18,8 @@ const Calendar = ({ showModal, weekDates, setToggleModal }) => {
 
   const onEventHandler = event => {
     const time = parseInt(event.target.dataset.time);
-    const dayDate = weekDates[event.target.parentNode.getAttribute('data-day')];
+    const dayDate = weekDates[event.target.closest('.calendar__day').dataset.day]; //
+    //event.target.parentNode.getAttribute('data-day')
 
     setHourData({
       eventDate: moment(dayDate).format('YYYY-MM-DD'),
