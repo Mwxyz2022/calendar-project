@@ -9,24 +9,29 @@ import Modal from '../modal/Modal.jsx';
 
 import { fetchEvent } from '../../gateway/events.js';
 import { getFullTime } from '../../utils/timeUtils';
+import { defaultEventTime } from '../../utils/dateUtils';
 
 import './calendar.scss';
 
 const Calendar = ({ showModal, weekDates, setToggleModal }) => {
   const [events, setEvents] = useState([]);
-  const [hourData, setHourData] = useState(null);
+  const [modalDefaultDate, setModalDefaultDate] = useState(defaultEventTime);
 
-  const onEventHandler = event => {
+  const hourDateHandler = event => {
     const time = parseInt(event.target.dataset.time);
     const dayDate = weekDates[event.target.closest('.calendar__day').dataset.day];
 
-    setHourData({
-      eventDate: moment(dayDate).format('YYYY-MM-DD'),
-      eventStartTime: getFullTime(time),
-      eventEndTime: getFullTime(time + 1),
+    setModalDefaultDate({
+      defaultEventDate: moment(dayDate).format('YYYY-MM-DD'),
+      defaultEventStartTime: getFullTime(time),
+      defaultEventEndTime: getFullTime(time + 1),
     });
     setToggleModal(true);
   };
+
+  useEffect(() => {
+    setModalDefaultDate(defaultEventTime);
+  }, [showModal]);
 
   useEffect(() => {
     fetchEvent().then(response => {
@@ -36,10 +41,10 @@ const Calendar = ({ showModal, weekDates, setToggleModal }) => {
 
   return (
     <>
-      <section className="calendar" onClick={onEventHandler}>
+      <section className="calendar">
         <Navigation weekDates={weekDates} />
         <div className="calendar__body">
-          <div className="calendar__week-container">
+          <div className="calendar__week-container" onClick={hourDateHandler}>
             <Sidebar />
             <Week events={events} weekDates={weekDates} setEvents={setEvents} />
           </div>
@@ -47,10 +52,9 @@ const Calendar = ({ showModal, weekDates, setToggleModal }) => {
       </section>
       {showModal && (
         <Modal
-          hourData={hourData}
+          modalDefaultDate={modalDefaultDate}
           setToggleModal={setToggleModal}
           setEvents={setEvents}
-          setHourData={setHourData}
         />
       )}
     </>

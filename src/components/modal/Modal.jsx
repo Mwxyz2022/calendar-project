@@ -1,48 +1,64 @@
-import React from 'react';
-import moment from 'moment/moment';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 
 import { postEvent, fetchEvent } from '../../gateway/events.js';
 import { isValidationEvent } from '../../utils/validation';
-import { getDefStartTime, getDefEndTime } from '../../utils/timeUtils';
 
 import './modal.scss';
 
-const Modal = ({ hourData, setEvents, setToggleModal, setHourData }) => {
-  const currentMoment = moment();
+const Modal = ({ modalDefaultDate, setEvents, setToggleModal }) => {
+  const { defaultEventDate, defaultEventStartTime, defaultEventEndTime } = modalDefaultDate;
 
-  const defaultTime = {
-    eventDate: moment().format('YYYY-MM-DD'),
-    eventStartTime: getDefStartTime(currentMoment),
-    eventEndTime: getDefEndTime(getDefStartTime(currentMoment)),
+  const [title, setTitle] = useState('');
+  const [date, setDate] = useState(defaultEventDate);
+  const [startTime, setStartTime] = useState(defaultEventStartTime);
+  const [endTime, setEndTime] = useState(defaultEventEndTime);
+  const [description, setDescription] = useState('');
+
+  const titleHandler = e => {
+    setTitle(e.target.value);
   };
 
-  const closeModal = () => {
-    setHourData(null);
-    setToggleModal(false);
+  const dateHandler = e => {
+    setDate(e.target.value);
   };
 
-  const createEventHandler = e => {
+  const startTimeHandler = e => {
+    setStartTime(e.target.value);
+  };
+
+  const endTimeHandler = e => {
+    setEndTime(e.target.value);
+  };
+
+  const descriptionHandler = e => {
+    setDescription(e.target.value);
+  };
+
+  const onSubmit = e => {
     e.preventDefault();
 
-    const newEvent = {
-      title: e.target.title.value,
-      description: e.target.description.value,
-      dateFrom: new Date(`${e.target.date.value} ${e.target.startTime.value}`).getTime(),
-      dateTo: new Date(`${e.target.date.value} ${e.target.endTime.value}`).getTime(),
+    const payload = {
+      title,
+      description,
+      dateFrom: new Date(`${date} ${startTime}`).getTime(),
+      dateTo: new Date(`${date} ${endTime}`).getTime(),
     };
 
     fetchEvent().then(eventsArray => {
-      if (isValidationEvent(newEvent, eventsArray)) {
-        postEvent(newEvent).then(() => {
+      if (isValidationEvent(payload, eventsArray)) {
+        postEvent(payload).then(() => {
           fetchEvent().then(response => {
             setEvents(response);
-            setHourData(null);
             setToggleModal(false);
           });
         });
       }
     });
+  };
+
+  const closeModal = () => {
+    setToggleModal(false);
   };
 
   return (
@@ -52,12 +68,14 @@ const Modal = ({ hourData, setEvents, setToggleModal, setHourData }) => {
           <button className="create-event__close-btn" onClick={closeModal}>
             +
           </button>
-          <form className="event-form" onSubmit={createEventHandler}>
+          <form className="event-form" onSubmit={onSubmit}>
             <input
               type="text"
               name="title"
               className="event-form__field"
               placeholder="Title"
+              onChange={titleHandler}
+              value={title}
               required
             />
             <div className="event-form__time">
@@ -65,14 +83,16 @@ const Modal = ({ hourData, setEvents, setToggleModal, setHourData }) => {
                 type="date"
                 name="date"
                 className="event-form__field"
-                defaultValue={hourData ? hourData.eventDate : defaultTime.eventDate}
+                onChange={dateHandler}
+                value={date}
                 required
               />
               <input
                 type="time"
                 name="startTime"
                 className="event-form__field"
-                defaultValue={hourData ? hourData.eventStartTime : defaultTime.eventStartTime}
+                onChange={startTimeHandler}
+                value={startTime}
                 step="900"
                 required
               />
@@ -81,7 +101,8 @@ const Modal = ({ hourData, setEvents, setToggleModal, setHourData }) => {
                 type="time"
                 name="endTime"
                 className="event-form__field"
-                defaultValue={hourData ? hourData.eventEndTime : defaultTime.eventEndTime}
+                onChange={endTimeHandler}
+                value={endTime}
                 step="900"
                 required
               />
@@ -90,6 +111,8 @@ const Modal = ({ hourData, setEvents, setToggleModal, setHourData }) => {
               name="description"
               className="event-form__field"
               placeholder="Description"
+              onChange={descriptionHandler}
+              value={description}
               required
             ></textarea>
             <button type="submit" className="event-form__submit-btn">
@@ -103,10 +126,9 @@ const Modal = ({ hourData, setEvents, setToggleModal, setHourData }) => {
 };
 
 Modal.propTypes = {
-  hourData: PropTypes.object,
+  modalDefaultDate: PropTypes.object,
   setEvents: PropTypes.func.isRequired,
   setToggleModal: PropTypes.func.isRequired,
-  setHourData: PropTypes.func.isRequired,
 };
 
 export default Modal;
