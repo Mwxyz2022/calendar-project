@@ -4,7 +4,7 @@
 
  Project commands:
 
-- `npm start or yarn start` "Starting project"
+- `npm start ` "Starting project"
 - `npm run build` "Bundling project"
 
 ### The tech stack is:
