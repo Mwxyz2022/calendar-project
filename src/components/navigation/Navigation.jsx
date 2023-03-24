@@ -1,19 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-
-import { days } from '../../utils/dateUtils.js';
-
-import '../navigation/navigation.scss';
-
-import { MINUTE } from '../../utils/variables.js';
+import moment from 'moment';
 
 const Navigation = ({ weekDates }) => {
-  const [date, setDate] = useState(new Date().setHours(0, 0, 0, 0));
+  const [date, setDate] = useState(moment().startOf('day'));
 
   useEffect(() => {
     const intervalId = setInterval(() => {
-      setDate(new Date().setHours(0, 0, 0, 0));
-    }, MINUTE);
+      setDate(moment().startOf('day'));
+    }, 60000);
 
     return () => clearInterval(intervalId);
   }, []);
@@ -21,14 +16,13 @@ const Navigation = ({ weekDates }) => {
   return (
     <header className="calendar__header">
       {weekDates.map(dayDate => {
-        const styleDay =
-          date !== dayDate.getTime() ? `day-label__day-number` : `day-label__day-number today `;
+        const isToday = dayDate.isSame(date, 'day');
+        const styleDay = isToday ? 'day-label__day-number today' : 'day-label__day-number';
 
         return (
-          <div className="calendar__day-label day-label  " key={dayDate.getDay()}>
-            <span className="day-label__day-name">{days[dayDate.getDay()]}</span>
-
-            <span className={styleDay}>{dayDate.getDate()}</span>
+          <div className="calendar__day-label day-label" key={dayDate.day()}>
+            <span className="day-label__day-name">{dayDate.format('ddd')}</span>
+            <span className={styleDay}>{dayDate.date()}</span>
           </div>
         );
       })}
@@ -37,7 +31,7 @@ const Navigation = ({ weekDates }) => {
 };
 
 Navigation.propTypes = {
-  weekDates: PropTypes.array.isRequired,
+  weekDates: PropTypes.arrayOf(PropTypes.instanceOf(moment)).isRequired,
 };
 
 export default Navigation;

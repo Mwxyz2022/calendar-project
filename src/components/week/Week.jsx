@@ -1,33 +1,22 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
+import moment from 'moment';
 
 import Day from '../day/Day.jsx';
 
 import './week.scss';
 
-import { MINUTE } from '../../utils/variables.js';
-
 const Week = ({ events, weekDates, setEvents }) => {
-  const [redlinePosition, setRedlinePosition] = useState(`${new Date().getMinutes()}px`);
-
-  useEffect(() => {
-    const intervalId = setInterval(() => {
-      setRedlinePosition(`${new Date().getMinutes()}px`);
-    }, MINUTE);
-
-    return () => clearInterval(intervalId);
-  }, [redlinePosition]);
-
   return (
     <div className="calendar__week">
       {weekDates.map((dayStart, weekDay) => {
-        const dayEnd = new Date(dayStart.getTime()).setHours(dayStart.getHours() + 24);
+        const dayEnd = dayStart.clone().add(24, 'hours');
 
         const dayEvents = events.filter(
           event => event.dateFrom >= dayStart && event.dateTo <= dayEnd,
         );
 
-        const dataDay = dayStart.getDate();
+        const dataDay = dayStart.date();
 
         return (
           <Day
@@ -36,7 +25,6 @@ const Week = ({ events, weekDates, setEvents }) => {
             dataDay={dataDay}
             dayEvents={dayEvents}
             setEvents={setEvents}
-            redlinePosition={redlinePosition}
           />
         );
       })}
@@ -46,7 +34,7 @@ const Week = ({ events, weekDates, setEvents }) => {
 
 Week.propTypes = {
   events: PropTypes.array.isRequired,
-  weekDates: PropTypes.array.isRequired,
+  weekDates: PropTypes.arrayOf(PropTypes.instanceOf(moment)).isRequired,
   setEvents: PropTypes.func.isRequired,
 };
 

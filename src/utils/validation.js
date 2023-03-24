@@ -1,34 +1,37 @@
-import { EVENTMAXTIME } from './variables';
+import moment from 'moment';
 
-export const isValidationEvent = (newEvent, events) => {
-  let isValid = true;
+export const eventValidation = (newEvent, events) => {
+  const { dateFrom, dateTo } = newEvent;
 
-  if (newEvent.dateFrom === newEvent.dateTo) {
-    alert('error: Minimum duration of events, not less than 15 minutes!');
-    isValid = false;
+  const eventDuration = moment.duration(moment(dateTo).diff(moment(dateFrom)));
+  const maxDuration = moment.duration({ hours: 6 });
+  const isMultipleOf15 = value => value % 15 === 0;
+
+  const exceptionTimeTo = moment(dateTo).format('HH:mm') === '23:59';
+
+  if (
+    !isMultipleOf15(moment(dateFrom).minute()) ||
+    (!isMultipleOf15(moment(dateTo).minute()) && !exceptionTimeTo)
+  ) {
+    return 'error: Start and end times must be multiples of 15 minutes!';
   }
 
-  if (newEvent.dateFrom > newEvent.dateTo) {
-    alert(`error: Start date can't be later than end date!`);
-    isValid = false;
+  if (moment(dateFrom).isSameOrAfter(moment(dateTo))) {
+    return "error: Start date can't be later than end date!";
   }
 
-  if (newEvent.dateTo - newEvent.dateFrom > EVENTMAXTIME) {
-    alert(`error: Event cannot be longer than 6 hours!`);
-    isValid = false;
+  if (eventDuration > maxDuration) {
+    return 'error: Event cannot be longer than 6 hours!';
   }
 
-  const validEvent = events
-    .map(
-      event =>
-        (newEvent.dateFrom < event.dateFrom && newEvent.dateTo <= event.dateFrom) ||
-        (newEvent.dateFrom >= event.dateTo && newEvent.dateTo > event.dateTo),
-    )
-    .every(el => el);
+  const isValidEventTime = events.every(
+    event =>
+      moment(dateFrom).isSameOrAfter(event.dateTo) || moment(dateTo).isSameOrBefore(event.dateFrom),
+  );
 
-  if (!validEvent) {
-    alert('error: You have another event planned for this time!');
-    isValid = false;
+  if (!isValidEventTime) {
+    return 'error: Event overlaps with an existing event!';
   }
-  return isValid;
+
+  return false;
 };

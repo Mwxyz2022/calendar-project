@@ -6,7 +6,7 @@ import Hour from '../hour/Hour.jsx';
 
 import './day.scss';
 
-const Day = ({ redlinePosition, weekDay, dataDay, dayEvents, setEvents }) => {
+const Day = ({ weekDay, dataDay, dayEvents, setEvents }) => {
   const hours = Array(24)
     .fill()
     .map((_, index) => index);
@@ -20,7 +20,6 @@ const Day = ({ redlinePosition, weekDay, dataDay, dayEvents, setEvents }) => {
             key={dataDay + hour}
             dataHour={hour}
             hourEvents={hourEvents}
-            redlinePosition={redlinePosition}
             dataDay={dataDay}
             setEvents={setEvents}
           />
@@ -31,7 +30,6 @@ const Day = ({ redlinePosition, weekDay, dataDay, dayEvents, setEvents }) => {
 };
 
 Day.propTypes = {
-  redlinePosition: PropTypes.string.isRequired,
   weekDay: PropTypes.number.isRequired,
   dataDay: PropTypes.number.isRequired,
   dayEvents: PropTypes.array.isRequired,

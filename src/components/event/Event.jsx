@@ -21,6 +21,7 @@ const Event = ({ id, title, time, height, marginTop, setEvents }) => {
 
   const deleteEventHandler = event => {
     event.stopPropagation();
+
     deleteEvent(id).then(() => {
       fetchEvent().then(response => {
         setEvents(response);

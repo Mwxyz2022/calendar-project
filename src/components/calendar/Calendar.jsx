@@ -9,28 +9,28 @@ import Modal from '../modal/Modal.jsx';
 
 import { fetchEvent } from '../../gateway/events.js';
 import { getFullTime } from '../../utils/timeUtils';
-import { defaultEventTime } from '../../utils/dateUtils';
+import { defEventTimeData } from '../../utils/dateUtils';
 
 import './calendar.scss';
 
 const Calendar = ({ showModal, weekDates, setToggleModal }) => {
   const [events, setEvents] = useState([]);
-  const [modalDefaultDate, setModalDefaultDate] = useState(defaultEventTime);
+  const [defModalDate, setDefModalDate] = useState(defEventTimeData);
 
   const hourDateHandler = event => {
     const time = parseInt(event.target.dataset.time);
     const dayDate = weekDates[event.target.closest('.calendar__day').dataset.day];
 
-    setModalDefaultDate({
-      defaultEventDate: moment(dayDate).format('YYYY-MM-DD'),
-      defaultEventStartTime: getFullTime(time),
-      defaultEventEndTime: getFullTime(time + 1),
+    setDefModalDate({
+      defDate: moment(dayDate).format('YYYY-MM-DD'),
+      defStartTime: getFullTime(time),
+      defEndTime: getFullTime(time + 1),
     });
     setToggleModal(true);
   };
 
   useEffect(() => {
-    setModalDefaultDate(defaultEventTime);
+    setDefModalDate(defEventTimeData);
   }, [showModal]);
 
   useEffect(() => {
@@ -51,11 +51,7 @@ const Calendar = ({ showModal, weekDates, setToggleModal }) => {
         </div>
       </section>
       {showModal && (
-        <Modal
-          modalDefaultDate={modalDefaultDate}
-          setToggleModal={setToggleModal}
-          setEvents={setEvents}
-        />
+        <Modal defModalDate={defModalDate} setToggleModal={setToggleModal} setEvents={setEvents} />
       )}
     </>
   );

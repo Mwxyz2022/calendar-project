@@ -9,25 +9,21 @@ export const getFullTime = hour => {
 };
 
 export const getDefStartTime = date => {
-  let hour = date.get('hour');
+  const hour = date.get('hour');
   const currentMins = date.get('minutes');
-  let mins = null;
 
-  if (currentMins > 0 && currentMins <= 15) mins = '15';
-  if (currentMins > 15 && currentMins <= 30) mins = '30';
-  if (currentMins > 30 && currentMins <= 45) mins = '45';
-
-  if ((currentMins > 45 && currentMins <= 59 && hour === 23) || (hour === 0 && currentMins === 0))
+  if ((hour === 23 && currentMins > 45) || (hour === 0 && currentMins === 0)) {
     return '00:00';
-
-  if (currentMins > 45 && hour !== 23) {
-    hour += 1;
-    return `${formatTime(hour)}:00`;
   }
 
-  hour = formatTime(hour);
+  const nextHour = currentMins > 45 ? formatTime(hour + 1) : formatTime(hour);
 
-  return `${hour}:${mins}`;
+  if (currentMins > 0 && currentMins <= 15) return `${nextHour}:15`;
+  if (currentMins > 15 && currentMins <= 30) return `${nextHour}:30`;
+  if (currentMins > 30 && currentMins <= 45) return `${nextHour}:45`;
+  if (currentMins > 45) return `${nextHour}:00`;
+
+  return `${nextHour}:00`;
 };
 
 export const getDefEndTime = date => {

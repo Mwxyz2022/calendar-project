@@ -1,18 +1,19 @@
 import React, { useState } from 'react';
+import moment from 'moment/moment';
 import PropTypes from 'prop-types';
 
 import { postEvent, fetchEvent } from '../../gateway/events.js';
-import { isValidationEvent } from '../../utils/validation';
+import { eventValidation } from '../../utils/validation';
 
 import './modal.scss';
 
-const Modal = ({ modalDefaultDate, setEvents, setToggleModal }) => {
-  const { defaultEventDate, defaultEventStartTime, defaultEventEndTime } = modalDefaultDate;
+const Modal = ({ defModalDate, setEvents, setToggleModal }) => {
+  const { defDate, defStartTime, defEndTime } = defModalDate;
 
   const [title, setTitle] = useState('');
-  const [date, setDate] = useState(defaultEventDate);
-  const [startTime, setStartTime] = useState(defaultEventStartTime);
-  const [endTime, setEndTime] = useState(defaultEventEndTime);
+  const [date, setDate] = useState(defDate);
+  const [startTime, setStartTime] = useState(defStartTime);
+  const [endTime, setEndTime] = useState(defEndTime);
   const [description, setDescription] = useState('');
 
   const titleHandler = e => {
@@ -41,19 +42,26 @@ const Modal = ({ modalDefaultDate, setEvents, setToggleModal }) => {
     const payload = {
       title,
       description,
-      dateFrom: new Date(`${date} ${startTime}`).getTime(),
-      dateTo: new Date(`${date} ${endTime}`).getTime(),
+      dateFrom: moment(`${date} ${startTime}`, 'YYYY-MM-DD HH:mm').valueOf(),
+      dateTo: moment(`${date} ${endTime}`, 'YYYY-MM-DD HH:mm').valueOf(),
     };
 
-    fetchEvent().then(eventsArray => {
-      if (isValidationEvent(payload, eventsArray)) {
-        postEvent(payload).then(() => {
-          fetchEvent().then(response => {
-            setEvents(response);
-            setToggleModal(false);
-          });
-        });
+    // I'm getting all events because the POST API server doesn't support validation
+
+    fetchEvent().then(events => {
+      const errorMessage = eventValidation(payload, events);
+
+      if (errorMessage) {
+        alert(errorMessage);
+        return;
       }
+
+      postEvent(payload).then(() => {
+        fetchEvent().then(response => {
+          setEvents(response);
+          setToggleModal(false);
+        });
+      });
     });
   };
 
@@ -93,7 +101,6 @@ const Modal = ({ modalDefaultDate, setEvents, setToggleModal }) => {
                 className="event-form__field"
                 onChange={startTimeHandler}
                 value={startTime}
-                step="900"
                 required
               />
               <span>-</span>
@@ -103,7 +110,6 @@ const Modal = ({ modalDefaultDate, setEvents, setToggleModal }) => {
                 className="event-form__field"
                 onChange={endTimeHandler}
                 value={endTime}
-                step="900"
                 required
               />
             </div>
@@ -126,7 +132,7 @@ const Modal = ({ modalDefaultDate, setEvents, setToggleModal }) => {
 };
 
 Modal.propTypes = {
-  modalDefaultDate: PropTypes.object,
+  defModalDate: PropTypes.object,
   setEvents: PropTypes.func.isRequired,
   setToggleModal: PropTypes.func.isRequired,
 };

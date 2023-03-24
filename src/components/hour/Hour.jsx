@@ -1,4 +1,4 @@
-import React, { memo } from 'react';
+import React, { useState, useEffect } from 'react';
 import moment from 'moment/moment.js';
 import PropTypes from 'prop-types';
 
@@ -7,8 +7,21 @@ import Event from '../event/Event.jsx';
 
 import { formatTime } from '../../utils/timeUtils';
 
-const Hour = ({ redlinePosition, dataHour, dataDay, hourEvents, setEvents }) => {
-  const showLine = dataDay === new Date().getDate() && dataHour === new Date().getHours();
+const Hour = ({ dataHour, dataDay, hourEvents, setEvents }) => {
+  const now = moment();
+  const showLine = dataDay === now.date() && dataHour === now.hour();
+
+  const [redlinePosition, setRedlinePosition] = useState(`${now.minute()}px`);
+
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      const currentMinute = moment().minute();
+
+      setRedlinePosition(`${currentMinute}px`);
+    }, 60000);
+
+    return () => clearInterval(intervalId);
+  }, []);
 
   return (
     <div className="calendar__time-slot" data-time={dataHour}>
@@ -39,7 +52,6 @@ const Hour = ({ redlinePosition, dataHour, dataDay, hourEvents, setEvents }) => 
 };
 
 Hour.propTypes = {
-  redlinePosition: PropTypes.string.isRequired,
   dataHour: PropTypes.number.isRequired,
   dataDay: PropTypes.number.isRequired,
   hourEvents: PropTypes.array.isRequired,
