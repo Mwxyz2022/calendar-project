@@ -21,4 +21,3 @@ Project commands:
 ### Author:
 
 - Vladislav Rozhuk
-  sjdjsjdjdsa
