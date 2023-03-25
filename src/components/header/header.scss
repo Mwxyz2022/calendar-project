@@ -5,6 +5,20 @@
   align-items: center;
 }
 
+.button {
+  outline: none;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.icon-button {
+  outline: none;
+  border: none;
+  cursor: pointer;
+  background: transparent;
+}
+
 .create-event-btn {
   display: flex;
   justify-content: space-between;

@@ -6,8 +6,6 @@ import Calendar from './components/calendar/Calendar.jsx';
 
 import { generateWeekRange } from './utils/utils';
 
-import './styles/common.scss';
-
 const App = () => {
   const curWeekStartDay = moment().startOf('isoWeek');
 

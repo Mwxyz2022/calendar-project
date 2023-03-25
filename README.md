@@ -1,8 +1,8 @@
- Calendar-react
+Calendar-react
 
 ## [Calendar-react Netlify](https://lucent-praline-056e76.netlify.app/)
 
- Project commands:
+Project commands:
 
 - `npm start ` "Starting project"
 - `npm run build` "Bundling project"
@@ -16,6 +16,7 @@
 - [BEM methodology](https://en.bem.info/methodology/)
 - [JavaScript](https://en.wikipedia.org/wiki/JavaScript)
 - [React](https://en.reactjs.org/)
+- [Moment](https://momentjs.com/)
 
 ### Author:
 
