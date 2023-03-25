@@ -1,47 +1,45 @@
 import React, { useState, useEffect } from 'react';
-import moment from 'moment/moment.js';
+import moment from 'moment';
 import PropTypes from 'prop-types';
 
 import RedLine from '../redLine/RedLine.jsx';
 import Event from '../event/Event.jsx';
 
-import { formatTime } from '../../utils/timeUtils';
-
-const Hour = ({ dataHour, dataDay, hourEvents, setEvents }) => {
+const Hour = ({ dataHour, day, hourEvents, setEvents }) => {
   const now = moment();
-  const showLine = dataDay === now.date() && dataHour === now.hour();
 
   const [redlinePosition, setRedlinePosition] = useState(`${now.minute()}px`);
 
+  const isCurrentDate = now.isSame(day, 'day');
+  const showLine = isCurrentDate && dataHour === now.hour();
+
   useEffect(() => {
     const intervalId = setInterval(() => {
-      const currentMinute = moment().minute();
-
-      setRedlinePosition(`${currentMinute}px`);
+      setRedlinePosition(`${now.minute()}px`);
     }, 60000);
 
     return () => clearInterval(intervalId);
   }, []);
 
   return (
-    <div className="calendar__time-slot" data-time={dataHour}>
-      {showLine && <RedLine redlinePosition={redlinePosition} />}
+    <div className="calendar__time-slot" data-hour={dataHour}>
+      {showLine && <RedLine position={redlinePosition} />}
 
       {hourEvents.map(({ id, dateFrom, dateTo, title }) => {
-        const eventStart = `${moment(dateFrom).get('hour')}:${formatTime(
-          moment(dateFrom).get('minute'),
-        )}`;
-        const eventEnd = `${moment(dateTo).get('hour')}:${formatTime(
-          moment(dateTo).get('minute'),
-        )}`;
+        const eventStartTime = moment(dateFrom).format('HH:mm');
+        const eventEndTime = moment(dateTo).format('HH:mm');
+        const timeStrForEvent = `${eventStartTime} - ${eventEndTime}`;
+
+        const height = (dateTo - dateFrom) / (1000 * 60);
+        const marginTop = moment(dateFrom).get('minute');
 
         return (
           <Event
             key={id}
             id={id}
-            height={(dateTo - dateFrom) / (1000 * 60)}
-            marginTop={moment(dateFrom).get('minute')}
-            time={`${eventStart} - ${eventEnd}`}
+            height={height}
+            marginTop={marginTop}
+            time={timeStrForEvent}
             title={title}
             setEvents={setEvents}
           />
@@ -53,7 +51,7 @@ const Hour = ({ dataHour, dataDay, hourEvents, setEvents }) => {
 
 Hour.propTypes = {
   dataHour: PropTypes.number.isRequired,
-  dataDay: PropTypes.number.isRequired,
+  day: PropTypes.instanceOf(moment).isRequired,
   hourEvents: PropTypes.array.isRequired,
   setEvents: PropTypes.func.isRequired,
 };

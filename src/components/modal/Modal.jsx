@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import moment from 'moment/moment';
+import moment from 'moment';
 import PropTypes from 'prop-types';
 
 import { postEvent, fetchEvent } from '../../gateway/events.js';

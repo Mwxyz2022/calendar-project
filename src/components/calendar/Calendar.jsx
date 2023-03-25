@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import moment from 'moment/moment.js';
 
 import Navigation from './../navigation/Navigation.jsx';
 import Week from '../week/Week.jsx';
@@ -8,8 +7,8 @@ import Sidebar from '../sidebar/Sidebar.jsx';
 import Modal from '../modal/Modal.jsx';
 
 import { fetchEvent } from '../../gateway/events.js';
-import { getFullTime } from '../../utils/timeUtils';
-import { defEventTimeData } from '../../utils/dateUtils';
+
+import { defEventTimeData } from '../../utils/utils';
 
 import './calendar.scss';
 
@@ -18,13 +17,18 @@ const Calendar = ({ showModal, weekDates, setToggleModal }) => {
   const [defModalDate, setDefModalDate] = useState(defEventTimeData);
 
   const hourDateHandler = event => {
-    const time = parseInt(event.target.dataset.time);
-    const dayDate = weekDates[event.target.closest('.calendar__day').dataset.day];
+    const selectHour = parseInt(event.target.dataset.hour);
+    const selectDate = weekDates[event.target.closest('.calendar__day').dataset.day];
+
+    const formatDefDate = selectDate.format('YYYY-MM-DD');
+    const formatDefStartTime = selectDate.hour(selectHour).format('HH:mm');
+    const formatDefEndTime =
+      selectHour + 1 === 24 ? '23:59' : selectDate.hour(selectHour + 1).format('HH:mm');
 
     setDefModalDate({
-      defDate: moment(dayDate).format('YYYY-MM-DD'),
-      defStartTime: getFullTime(time),
-      defEndTime: getFullTime(time + 1),
+      defDate: formatDefDate,
+      defStartTime: formatDefStartTime,
+      defEndTime: formatDefEndTime,
     });
     setToggleModal(true);
   };

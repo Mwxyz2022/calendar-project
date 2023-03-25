@@ -1,6 +1,6 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import moment from 'moment';
+import PropTypes from 'prop-types';
 
 import Day from '../day/Day.jsx';
 
@@ -9,23 +9,13 @@ import './week.scss';
 const Week = ({ events, weekDates, setEvents }) => {
   return (
     <div className="calendar__week">
-      {weekDates.map((dayStart, weekDay) => {
-        const dayEnd = dayStart.clone().add(24, 'hours');
+      {weekDates.map((day, dayID) => {
+        const dayEnd = day.clone().add(24, 'hours');
 
-        const dayEvents = events.filter(
-          event => event.dateFrom >= dayStart && event.dateTo <= dayEnd,
-        );
-
-        const dataDay = dayStart.date();
+        const dayEvents = events.filter(event => event.dateFrom >= day && event.dateTo <= dayEnd);
 
         return (
-          <Day
-            key={dataDay}
-            weekDay={weekDay}
-            dataDay={dataDay}
-            dayEvents={dayEvents}
-            setEvents={setEvents}
-          />
+          <Day key={dayID} dayID={dayID} day={day} dayEvents={dayEvents} setEvents={setEvents} />
         );
       })}
     </div>

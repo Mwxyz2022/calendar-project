@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
-import moment from 'moment/moment';
+import moment from 'moment';
 
 import Header from './components/header/Header.jsx';
 import Calendar from './components/calendar/Calendar.jsx';
-import { generateWeekRange } from './utils/dateUtils';
+
+import { generateWeekRange } from './utils/utils';
 
 import './assets/common.scss';
 

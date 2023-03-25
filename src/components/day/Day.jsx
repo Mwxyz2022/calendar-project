@@ -1,26 +1,26 @@
 import React from 'react';
-import moment from 'moment/moment.js';
+import moment from 'moment';
 import PropTypes from 'prop-types';
 
 import Hour from '../hour/Hour.jsx';
 
 import './day.scss';
 
-const Day = ({ weekDay, dataDay, dayEvents, setEvents }) => {
+const Day = ({ dayID, day, dayEvents, setEvents }) => {
   const hours = Array(24)
     .fill()
     .map((_, index) => index);
 
   return (
-    <div className="calendar__day" data-day={weekDay}>
+    <div className="calendar__day" data-day={dayID}>
       {hours.map(hour => {
         const hourEvents = dayEvents.filter(event => moment(event.dateFrom).get('hour') === hour);
         return (
           <Hour
-            key={dataDay + hour}
+            key={dayID + hour}
             dataHour={hour}
             hourEvents={hourEvents}
-            dataDay={dataDay}
+            day={day}
             setEvents={setEvents}
           />
         );
@@ -30,8 +30,8 @@ const Day = ({ weekDay, dataDay, dayEvents, setEvents }) => {
 };
 
 Day.propTypes = {
-  weekDay: PropTypes.number.isRequired,
-  dataDay: PropTypes.number.isRequired,
+  dayID: PropTypes.number.isRequired,
+  day: PropTypes.instanceOf(moment).isRequired,
   dayEvents: PropTypes.array.isRequired,
   setEvents: PropTypes.func.isRequired,
 };

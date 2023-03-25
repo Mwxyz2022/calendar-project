@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+
 import { fetchEvent, deleteEvent } from '../../gateway/events';
 
 import './event.scss';
@@ -17,7 +18,9 @@ const Event = ({ id, title, time, height, marginTop, setEvents }) => {
     marginTop,
   };
 
-  const delBtnPosition = height - 10;
+  const delModalStyle = {
+    top: height - 10,
+  };
 
   const deleteEventHandler = event => {
     event.stopPropagation();
@@ -37,7 +40,7 @@ const Event = ({ id, title, time, height, marginTop, setEvents }) => {
         <div className="event__time">{time}</div>
       </div>
       {deleteModal && (
-        <div className="delete" onClick={deleteEventHandler} style={{ top: delBtnPosition }}>
+        <div className="delete" onClick={deleteEventHandler} style={delModalStyle}>
           <i className="delete__icon fas fa-solid fa-trash"></i>
           <span className="delete__title">Delete</span>
         </div>

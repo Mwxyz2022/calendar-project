@@ -3,9 +3,9 @@ import PropTypes from 'prop-types';
 
 import './redline.scss';
 
-const RedLine = ({ redlinePosition }) => {
+const RedLine = ({ position }) => {
   return (
-    <div className="redLine" style={{ top: redlinePosition }}>
+    <div className="redLine" style={{ top: position }}>
       <div className="redLine__line"></div>
       <span className="redLine__point"></span>
     </div>
@@ -13,6 +13,6 @@ const RedLine = ({ redlinePosition }) => {
 };
 
 RedLine.propTypes = {
-  redlinePosition: PropTypes.string.isRequired,
+  position: PropTypes.string.isRequired,
 };
 export default RedLine;
