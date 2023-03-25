@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 
 import App from './App';
 
-import './assets/index.scss';
+import './styles/index.scss';
 
 const rootElement = document.querySelector('#root');
 
