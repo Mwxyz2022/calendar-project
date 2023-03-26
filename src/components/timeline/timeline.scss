@@ -1,13 +1,13 @@
 @import '../../styles/variables.scss';
 
-.redLine {
+.timeline {
   position: absolute;
   width: 100%;
   top: 0;
 
   &__line {
     height: 2px;
-    background-color: $color-current-line;
+    background-color: $color-timeline;
     position: relative;
 
     &::before {
@@ -15,7 +15,7 @@
       top: -1.5px;
       left: -2.75px;
       content: '';
-      background-color: $color-current-line;
+      background-color: $color-timeline;
       height: 5px;
       width: 5px;
       border-radius: 50%;
