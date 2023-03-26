@@ -20,11 +20,13 @@ When you click on the hour cell, the application will offer to create an event i
 
 You cannot delete an event 15 minutes before it starts
 
-## Style
+## Color scheme control
+
+Application color settings are defined in the `style/variables.scss` file. To change the application's color scheme, you need to change the values of the corresponding variables in this file. After changing the values of variables, you must restart the application for the changes to take effect.
 
 ### Project commands:
 
-- `npm start ` "Starting project"
+- `npm start` "Starting project"
 - `npm run build` "Bundling project"
 
 ### The tech stack is:
