@@ -1,6 +1,4 @@
-# Calendar-app
-
-## [Calendar Netlify](https://lucent-praline-056e76.netlify.app/)
+## [Calendar-app Netlify](https://lucent-praline-056e76.netlify.app/)
 
 ## Functionality:
 
