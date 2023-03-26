@@ -1,5 +1,9 @@
 ## [Calendar-app Netlify](https://lucent-praline-056e76.netlify.app/)
 
+After launching the application, the user can create new events by clicking on the dates in the calendar and entering information about the event. The user can also edit and delete existing events by clicking on the corresponding buttons in the interface.
+
+The application allows you to view the calendar in week mode. To change the viewing week, click on the toggle button at the top of the application. By pressing the "Today" button, you will return to the current week for planning.
+
 ## Functionality:
 
 The app was developed using the React library
@@ -16,7 +20,9 @@ When you click on the hour cell, the application will offer to create an event i
 
 You cannot delete an event 15 minutes before it starts
 
-Project commands:
+## Style
+
+### Project commands:
 
 - `npm start ` "Starting project"
 - `npm run build` "Bundling project"
