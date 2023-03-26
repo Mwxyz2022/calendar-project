@@ -1,5 +1,7 @@
 ## [Calendar-app Netlify](https://lucent-praline-056e76.netlify.app/)
 
+The app was developed using the React library
+
 After launching the application, the user can create new events by clicking on the dates in the calendar and entering information about the event. The user can also edit and delete existing events by clicking on the corresponding buttons in the interface.
 
 The application allows you to view the calendar in week mode. To change the viewing week, click on the toggle button at the top of the application. By pressing the "Today" button, you will return to the current week for planning.
@@ -38,6 +40,7 @@ Application color settings are defined in the `style/variables.scss` file. To ch
 - [BEM methodology](https://en.bem.info/methodology/)
 - [JavaScript](https://en.wikipedia.org/wiki/JavaScript)
 - [React](https://en.reactjs.org/)
+- [React PropTypes](https://reactjs.org/docs/typechecking-with-proptypes.html)
 - [Moment](https://momentjs.com/)
 
 ### Author:
