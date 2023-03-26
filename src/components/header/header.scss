@@ -12,14 +12,7 @@
   font-weight: 500;
 }
 
-.icon-button {
-  outline: none;
-  border: none;
-  cursor: pointer;
-  background: transparent;
-}
-
-.create-event-btn {
+.button-create {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -30,7 +23,7 @@
   border: none;
   box-shadow: 0px 6px 17px -12px rgba(0, 0, 0, 0.75);
 
-  &__create {
+  .title {
     margin-right: 20px;
   }
 
@@ -41,7 +34,7 @@
 }
 
 .navigation {
-  &__today-btn {
+  &__button-today {
     height: 38px;
     margin-left: 32px;
     padding: 0 16px;
@@ -51,6 +44,13 @@
     &:hover {
       background-color: rgba(223, 233, 231, 0.813);
     }
+  }
+
+  .icon-button {
+    outline: none;
+    border: none;
+    cursor: pointer;
+    background: transparent;
   }
 
   &__nav-icon {

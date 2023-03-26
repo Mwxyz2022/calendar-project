@@ -4,8 +4,6 @@ import PropTypes from 'prop-types';
 
 import Hour from '../hour/Hour.jsx';
 
-import './day.scss';
-
 const Day = ({ dayID, day, dayEvents, setEvents }) => {
   const hours = Array(24)
     .fill()

@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import moment from 'moment';
 import PropTypes from 'prop-types';
 
+import './navigation.scss';
+
 const Navigation = ({ weekDates }) => {
   const [date, setDate] = useState(moment().startOf('day'));
 
@@ -19,10 +21,13 @@ const Navigation = ({ weekDates }) => {
         const isToday = dayDate.isSame(date, 'day');
         const styleDay = isToday ? 'day-label__day-number today' : 'day-label__day-number';
 
+        const dateName = dayDate.format('ddd');
+        const dateNum = dayDate.date();
+
         return (
-          <div className="calendar__day-label day-label" key={dayDate.day()}>
-            <span className="day-label__day-name">{dayDate.format('ddd')}</span>
-            <span className={styleDay}>{dayDate.date()}</span>
+          <div className="calendar__day-label day-label" key={dateNum}>
+            <span className="day-label__day-name">{dateName}</span>
+            <span className={styleDay}>{dateNum}</span>
           </div>
         );
       })}

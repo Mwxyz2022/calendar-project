@@ -1,3 +1,5 @@
+@import '../../styles/variables.scss';
+
 .modal {
   position: fixed;
   display: flex;
@@ -5,7 +7,7 @@
   align-items: center;
 
   &__content {
-    background: #fff;
+    background: $color-bg-modal;
     padding: 16px;
     border: 1px solid #ccc;
     border-radius: 8px;
@@ -18,7 +20,7 @@
   left: 0;
   width: 100vw;
   height: 100vh;
-  background-color: #cccccc45;
+  background-color: $color-bg-modal-overlay;
   z-index: 10;
 }
 
@@ -52,8 +54,8 @@
     margin: 8px;
     margin-left: auto;
     border: none;
-    color: #fff;
-    background-color: cornflowerblue;
+    color: $color-white-text;
+    background-color: $color-bg-modal-btn;
     border: none;
     padding: 8px 16px;
     border-radius: 8px;
