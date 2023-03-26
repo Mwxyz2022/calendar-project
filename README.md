@@ -1,6 +1,20 @@
-Calendar-react
+# Calendar-react
 
-## [Calendar-react Netlify](https://lucent-praline-056e76.netlify.app/)
+The app was developed using the React library
+
+When you click the "create" button, by default, the nearest possible time for an event with a duration of 1 hour is selected
+
+Events are created according to the rules:
+
+- created within one day
+- duration not less than 15 min. no longer than 6 hours.
+- start and end times in multiples of 15 minutes
+
+When you click on the hour cell, the application will offer to create an event in the selected range
+
+You cannot delete an event 15 minutes before it starts
+
+## [Calendar Netlify](https://lucent-praline-056e76.netlify.app/)
 
 Project commands:
 

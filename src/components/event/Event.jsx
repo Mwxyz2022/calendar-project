@@ -2,10 +2,11 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 
 import { fetchEvent, deleteEvent } from '../../gateway/events';
+import { delValidation } from '../../utils/validation';
 
 import './event.scss';
 
-const Event = ({ id, title, time, height, marginTop, setEvents }) => {
+const Event = ({ id, title, startEventDate, time, height, marginTop, setEvents }) => {
   const [deleteModal, setDeleteModal] = useState(false);
 
   const deleteModalHandler = event => {
@@ -24,6 +25,13 @@ const Event = ({ id, title, time, height, marginTop, setEvents }) => {
 
   const deleteEventHandler = event => {
     event.stopPropagation();
+
+    const errorMessage = delValidation(startEventDate);
+
+    if (errorMessage) {
+      alert(errorMessage);
+      return;
+    }
 
     deleteEvent(id).then(() => {
       fetchEvent().then(response => {
@@ -52,6 +60,7 @@ const Event = ({ id, title, time, height, marginTop, setEvents }) => {
 Event.propTypes = {
   id: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
+  startEventDate: PropTypes.number.isRequired,
   time: PropTypes.string.isRequired,
   height: PropTypes.number.isRequired,
   marginTop: PropTypes.number.isRequired,

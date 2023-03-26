@@ -17,6 +17,7 @@ const Navigation = ({ weekDates }) => {
     <header className="calendar__header">
       {weekDates.map(dayDate => {
         const isToday = dayDate.isSame(date, 'day');
+        console.log(isToday);
         const styleDay = isToday ? 'day-label__day-number today' : 'day-label__day-number';
 
         return (

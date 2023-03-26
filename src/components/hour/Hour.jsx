@@ -37,6 +37,7 @@ const Hour = ({ dataHour, day, hourEvents, setEvents }) => {
           <Event
             key={id}
             id={id}
+            startEventDate={dateFrom}
             height={height}
             marginTop={marginTop}
             time={timeStrForEvent}

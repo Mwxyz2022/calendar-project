@@ -35,3 +35,13 @@ export const eventValidation = (newEvent, events) => {
 
   return false;
 };
+
+export const delValidation = dateEvent => {
+  const eventTime = moment(dateEvent);
+  const currentTime = moment();
+  const diffMinutes = eventTime.diff(currentTime, 'minutes');
+
+  const messageError = `Error: You can't delete events that are less than 15 minutes away!`;
+
+  return diffMinutes >= 0 && diffMinutes <= 15 ? messageError : false;
+};
