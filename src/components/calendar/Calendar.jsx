@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import moment from 'moment';
 import PropTypes from 'prop-types';
 
 import Navigation from './../navigation/Navigation.jsx';
@@ -8,13 +9,15 @@ import Modal from '../modal/Modal.jsx';
 
 import { fetchEvent } from '../../gateway/events.js';
 
-import { defEventTimeData } from '../../utils/utils';
+import { getDefModalDataDate } from '../../utils/utils';
 
 import './calendar.scss';
 
 const Calendar = ({ showModal, weekDates, setToggleModal }) => {
+  const defDataDate = getDefModalDataDate(moment());
+
   const [events, setEvents] = useState([]);
-  const [defModalDate, setDefModalDate] = useState(defEventTimeData);
+  const [defModalDate, setDefModalDate] = useState(defDataDate);
 
   const hourDateHandler = event => {
     const selectHour = parseInt(event.target.dataset.hour);
@@ -34,7 +37,7 @@ const Calendar = ({ showModal, weekDates, setToggleModal }) => {
   };
 
   useEffect(() => {
-    setDefModalDate(defEventTimeData);
+    setDefModalDate(defDataDate);
   }, [showModal]);
 
   useEffect(() => {

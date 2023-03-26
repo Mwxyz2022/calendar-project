@@ -1,4 +1,4 @@
-import moment from 'moment/moment';
+import moment from 'moment';
 
 export const generateWeekRange = startDate => {
   return new Array(7).fill(null).map((_, index) => {
@@ -32,14 +32,14 @@ const getEndTime = startTime => {
   return `${formatTime(hour + 1)}:${mins}`;
 };
 
-const nowDate = moment();
+export const getDefModalDataDate = nowDate => {
+  const formatDefDate = nowDate.format('YYYY-MM-DD');
+  const formatDefStartTime = getStartTime(nowDate);
+  const formatDefEndTime = getEndTime(formatDefStartTime);
 
-const formatDefDate = nowDate.format('YYYY-MM-DD');
-const formatDefStartTime = getStartTime(nowDate);
-const formatDefEndTime = getEndTime(formatDefStartTime);
-
-export const defEventTimeData = {
-  defDate: formatDefDate,
-  defStartTime: formatDefStartTime,
-  defEndTime: formatDefEndTime,
+  return {
+    defDate: formatDefDate,
+    defStartTime: formatDefStartTime,
+    defEndTime: formatDefEndTime,
+  };
 };
