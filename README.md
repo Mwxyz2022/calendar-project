@@ -1,4 +1,8 @@
-# Calendar-react
+# Calendar-app
+
+## [Calendar Netlify](https://lucent-praline-056e76.netlify.app/)
+
+## Functionality:
 
 The app was developed using the React library
 
@@ -13,8 +17,6 @@ Events are created according to the rules:
 When you click on the hour cell, the application will offer to create an event in the selected range
 
 You cannot delete an event 15 minutes before it starts
-
-## [Calendar Netlify](https://lucent-praline-056e76.netlify.app/)
 
 Project commands:
 
