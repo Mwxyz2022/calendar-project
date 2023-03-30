@@ -10,40 +10,31 @@ import './modal.scss';
 const Modal = ({ defModalDate, setEvents, setToggleModal }) => {
   const { defDate, defStartTime, defEndTime } = defModalDate;
 
-  const [title, setTitle] = useState('');
-  const [date, setDate] = useState(defDate);
-  const [startTime, setStartTime] = useState(defStartTime);
-  const [endTime, setEndTime] = useState(defEndTime);
-  const [description, setDescription] = useState('');
+  const [newEvent, setNewEvent] = useState({
+    title: '',
+    date: defDate,
+    startTime: defStartTime,
+    endTime: defEndTime,
+    description: '',
+  });
 
-  const titleHandler = e => {
-    setTitle(e.target.value);
-  };
+  const onChangeForm = event => {
+    const { name, value } = event.target;
 
-  const dateHandler = e => {
-    setDate(e.target.value);
-  };
-
-  const startTimeHandler = e => {
-    setStartTime(e.target.value);
-  };
-
-  const endTimeHandler = e => {
-    setEndTime(e.target.value);
-  };
-
-  const descriptionHandler = e => {
-    setDescription(e.target.value);
+    setNewEvent(prevState => ({
+      ...prevState,
+      [name]: value,
+    }));
   };
 
   const onSubmit = e => {
     e.preventDefault();
 
     const payload = {
-      title,
-      description,
-      dateFrom: moment(`${date} ${startTime}`, 'YYYY-MM-DD HH:mm').valueOf(),
-      dateTo: moment(`${date} ${endTime}`, 'YYYY-MM-DD HH:mm').valueOf(),
+      title: newEvent.title,
+      description: newEvent.description,
+      dateFrom: moment(`${newEvent.date} ${newEvent.startTime}`, 'YYYY-MM-DD HH:mm').valueOf(),
+      dateTo: moment(`${newEvent.date} ${newEvent.endTime}`, 'YYYY-MM-DD HH:mm').valueOf(),
     };
 
     // I'm getting all events because the POST API server doesn't support validation
@@ -57,10 +48,14 @@ const Modal = ({ defModalDate, setEvents, setToggleModal }) => {
       }
 
       postEvent(payload).then(() => {
-        fetchEvent().then(response => {
-          setEvents(response);
-          setToggleModal(false);
-        });
+        fetchEvent()
+          .then(response => {
+            setEvents(response);
+            setToggleModal(false);
+          })
+          .catch(error => {
+            throw new Error(error.message);
+          });
       });
     });
   };
@@ -82,8 +77,8 @@ const Modal = ({ defModalDate, setEvents, setToggleModal }) => {
               name="title"
               className="event-form__field"
               placeholder="Title"
-              onChange={titleHandler}
-              value={title}
+              onChange={onChangeForm}
+              value={newEvent.title}
               required
             />
             <div className="event-form__time">
@@ -91,16 +86,16 @@ const Modal = ({ defModalDate, setEvents, setToggleModal }) => {
                 type="date"
                 name="date"
                 className="event-form__field"
-                onChange={dateHandler}
-                value={date}
+                onChange={onChangeForm}
+                value={newEvent.date}
                 required
               />
               <input
                 type="time"
                 name="startTime"
                 className="event-form__field"
-                onChange={startTimeHandler}
-                value={startTime}
+                onChange={onChangeForm}
+                value={newEvent.startTime}
                 required
               />
               <span>-</span>
@@ -108,8 +103,8 @@ const Modal = ({ defModalDate, setEvents, setToggleModal }) => {
                 type="time"
                 name="endTime"
                 className="event-form__field"
-                onChange={endTimeHandler}
-                value={endTime}
+                onChange={onChangeForm}
+                value={newEvent.endTime}
                 required
               />
             </div>
@@ -117,8 +112,8 @@ const Modal = ({ defModalDate, setEvents, setToggleModal }) => {
               name="description"
               className="event-form__field"
               placeholder="Description"
-              onChange={descriptionHandler}
-              value={description}
+              onChange={onChangeForm}
+              value={newEvent.description}
               required
             ></textarea>
             <button type="submit" className="event-form__submit-btn">
@@ -138,3 +133,29 @@ Modal.propTypes = {
 };
 
 export default Modal;
+
+//   const [title, setTitle] = useState('');
+//   const [date, setDate] = useState(defDate);
+//   const [startTime, setStartTime] = useState(defStartTime);
+//   const [endTime, setEndTime] = useState(defEndTime);
+//   const [description, setDescription] = useState('');
+
+//   const titleHandler = e => {
+//     setTitle(e.target.value);
+//   };
+
+//   const dateHandler = e => {
+//     setDate(e.target.value);
+//   };
+
+//   const startTimeHandler = e => {
+//     setStartTime(e.target.value);
+//   };
+
+//   const endTimeHandler = e => {
+//     setEndTime(e.target.value);
+//   };
+
+//   const descriptionHandler = e => {
+//     setDescription(e.target.value);
+//   };

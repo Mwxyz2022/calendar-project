@@ -41,9 +41,13 @@ const Calendar = ({ showModal, weekDates, setToggleModal }) => {
   }, [showModal]);
 
   useEffect(() => {
-    fetchEvent().then(response => {
-      setEvents(response);
-    });
+    fetchEvent()
+      .then(response => {
+        setEvents(response);
+      })
+      .catch(error => {
+        throw new Error(error.message);
+      });
   }, []);
 
   return (

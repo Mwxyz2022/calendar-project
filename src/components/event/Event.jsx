@@ -34,9 +34,14 @@ const Event = ({ id, title, startEventDate, time, height, marginTop, setEvents }
     }
 
     deleteEvent(id).then(() => {
-      fetchEvent().then(response => {
-        setEvents(response);
-      });
+      fetchEvent()
+        .then(response => {
+          setEvents(response);
+        })
+        .catch(error => {
+          throw new Error(error.message);
+        });
+
       setDeleteModal(false);
     });
   };
