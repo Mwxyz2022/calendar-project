@@ -32,9 +32,15 @@ const getEndTime = startTime => {
   return `${formatTime(hour + 1)}:${mins}`;
 };
 
-export const getDefModalDataDate = nowDate => {
-  const formatDefDate = nowDate.format('YYYY-MM-DD');
-  const formatDefStartTime = getStartTime(nowDate);
+export const getDefModalDataDate = (currentDate, dateSelect, hourSelect) => {
+  const formatDefDate = dateSelect
+    ? dateSelect.format('YYYY-MM-DD')
+    : currentDate.format('YYYY-MM-DD');
+
+  const formatDefStartTime = dateSelect
+    ? dateSelect.hour(hourSelect).format('HH:mm')
+    : getStartTime(currentDate);
+
   const formatDefEndTime = getEndTime(formatDefStartTime);
 
   return {

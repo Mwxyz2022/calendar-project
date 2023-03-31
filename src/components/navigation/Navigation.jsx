@@ -1,24 +1,14 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import moment from 'moment';
 import PropTypes from 'prop-types';
 
 import './navigation.scss';
 
 const Navigation = ({ weekDates }) => {
-  const [date, setDate] = useState(moment().startOf('day'));
-
-  useEffect(() => {
-    const intervalId = setInterval(() => {
-      setDate(moment().startOf('day'));
-    }, 60000);
-
-    return () => clearInterval(intervalId);
-  }, []);
-
   return (
     <header className="calendar__header">
       {weekDates.map(dayDate => {
-        const isToday = dayDate.isSame(date, 'day');
+        const isToday = dayDate.isSame(moment(), 'day');
         const styleDay = isToday ? 'day-label__day-number today' : 'day-label__day-number';
 
         const dateName = dayDate.format('ddd');

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import moment from 'moment';
 import PropTypes from 'prop-types';
 
@@ -6,24 +6,9 @@ import Timeline from '../timeline/Timeline.jsx';
 import Event from '../event/Event.jsx';
 
 const Hour = ({ dataHour, day, hourEvents, setEvents }) => {
-  const now = moment();
-
-  const [timelinePosition, setTimelinePosition] = useState(`${now.minute()}px`);
-
-  const isCurrentDate = now.isSame(day, 'day');
-  const showLine = isCurrentDate && dataHour === now.hour();
-
-  useEffect(() => {
-    const intervalId = setInterval(() => {
-      setTimelinePosition(`${now.minute()}px`);
-    }, 60000);
-
-    return () => clearInterval(intervalId);
-  }, []);
-
   return (
     <div className="calendar__time-slot" data-hour={dataHour}>
-      {showLine && <Timeline position={timelinePosition} />}
+      <Timeline dataHour={dataHour} day={day} />
 
       {hourEvents.map(({ id, dateFrom, dateTo, title }) => {
         const eventStartTime = moment(dateFrom).format('HH:mm');

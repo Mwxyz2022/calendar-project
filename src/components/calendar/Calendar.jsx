@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from 'react';
-import moment from 'moment';
+import React, { useEffect, useState, memo } from 'react';
 import PropTypes from 'prop-types';
 
 import Navigation from './../navigation/Navigation.jsx';
@@ -9,45 +8,36 @@ import Modal from '../modal/Modal.jsx';
 
 import { fetchEvent } from '../../gateway/events.js';
 
-import { getDefModalDataDate } from '../../utils/utils';
-
 import './calendar.scss';
 
 const Calendar = ({ showModal, weekDates, setToggleModal }) => {
-  const defDataDate = getDefModalDataDate(moment());
-
   const [events, setEvents] = useState([]);
-  const [defModalDate, setDefModalDate] = useState(defDataDate);
+  const [selectData, setSelectData] = useState({});
 
   const hourDateHandler = event => {
-    const selectHour = parseInt(event.target.dataset.hour);
-    const selectDate = weekDates[event.target.closest('.calendar__day').dataset.day];
-
-    const formatDefDate = selectDate.format('YYYY-MM-DD');
-    const formatDefStartTime = selectDate.hour(selectHour).format('HH:mm');
-    const formatDefEndTime =
-      selectHour + 1 === 24 ? '23:59' : selectDate.hour(selectHour + 1).format('HH:mm');
-
-    setDefModalDate({
-      defDate: formatDefDate,
-      defStartTime: formatDefStartTime,
-      defEndTime: formatDefEndTime,
+    setSelectData({
+      hourSelect: parseInt(event.target.dataset.hour),
+      dateSelect: weekDates[event.target.closest('.calendar__day').dataset.day],
     });
     setToggleModal(true);
   };
 
   useEffect(() => {
-    setDefModalDate(defDataDate);
+    setSelectData({});
   }, [showModal]);
 
   useEffect(() => {
-    fetchEvent()
-      .then(response => {
+    const fetchEvents = async () => {
+      try {
+        const response = await fetchEvent();
         setEvents(response);
-      })
-      .catch(error => {
-        throw new Error(error.message);
-      });
+      } catch (error) {
+        console.error(error.message);
+        alert('Error loading events data');
+      }
+    };
+
+    fetchEvents();
   }, []);
 
   return (
@@ -62,7 +52,7 @@ const Calendar = ({ showModal, weekDates, setToggleModal }) => {
         </div>
       </section>
       {showModal && (
-        <Modal defModalDate={defModalDate} setToggleModal={setToggleModal} setEvents={setEvents} />
+        <Modal selectData={selectData} setToggleModal={setToggleModal} setEvents={setEvents} />
       )}
     </>
   );
@@ -74,4 +64,4 @@ Calendar.propTypes = {
   setToggleModal: PropTypes.func.isRequired,
 };
 
-export default Calendar;
+export default memo(Calendar);

@@ -23,7 +23,7 @@ const Event = ({ id, title, startEventDate, time, height, marginTop, setEvents }
     top: height - 10,
   };
 
-  const deleteEventHandler = event => {
+  const deleteEventHandler = async event => {
     event.stopPropagation();
 
     const errorMessage = delValidation(startEventDate);
@@ -33,17 +33,15 @@ const Event = ({ id, title, startEventDate, time, height, marginTop, setEvents }
       return;
     }
 
-    deleteEvent(id).then(() => {
-      fetchEvent()
-        .then(response => {
-          setEvents(response);
-        })
-        .catch(error => {
-          throw new Error(error.message);
-        });
-
+    try {
+      await deleteEvent(id);
+      const response = await fetchEvent();
+      setEvents(response);
       setDeleteModal(false);
-    });
+    } catch (error) {
+      console.error(error.message);
+      alert('Error deleting the event!');
+    }
   };
 
   return (
