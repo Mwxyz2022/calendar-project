@@ -36,8 +36,8 @@ const Event = ({ id, title, startEventDate, time, height, marginTop, setEvents }
     try {
       await deleteEvent(id);
       const response = await fetchEvent();
-      setEvents(response);
       setDeleteModal(false);
+      setEvents(response);
     } catch (error) {
       console.error(error.message);
       alert('Error deleting the event!');
